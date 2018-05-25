@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}添加{{ msg }}{% endblock %}
+
+{% block content %}
+	<h1 style="text-align: center">添加新{{ msg }}</h1>
+    <form action="" method="post">
+	    {% csrf_token %}
+	    <table>
+            {{form.as_table}}
+	    </table>
+	    <input type="submit" value="提交" />
+	</form>
+{% endblock %}
