@@ -4,3 +4,4 @@
 db.sqlite3
 venv/
 Keeson/settings.py
+Keeson/__pycache__/*

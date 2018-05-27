@@ -30,6 +30,7 @@ class Patient(models.Model):
 
     class Meta:
         verbose_name_plural = '病人基本信息'
+        unique_together = ['BEDID', 'SUBJECTID']
 
     def __str__(self):
         return str(self.BEDID) + '-' + str(self.SUBJECTID)
