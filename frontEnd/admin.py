@@ -4,6 +4,10 @@ from django.contrib import admin
 from .models import *
 
 
+class PatientBedAdmin(admin.ModelAdmin):
+    search_fields = ['BEDID']
+
+
 class PatientAdmin(admin.ModelAdmin):
     list_display = ['BEDID', 'SUBJECTID', 'DMGENDER', 'DMSTDTC', 'DMENDTC']
     list_filter = ['BEDID']
@@ -46,7 +50,7 @@ class PatientPEAdmin(admin.ModelAdmin):
     search_fields = ['BEDID']
 
 
-admin.site.register(PatientBed)
+admin.site.register(PatientBed, PatientBedAdmin)
 admin.site.register(Patient, PatientAdmin)
 admin.site.register(PatientMH, PatientMHAdmin)
 admin.site.register(PatientTE, PatientTEAdmin)
