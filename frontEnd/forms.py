@@ -6,10 +6,11 @@ from .models import *
 # class PersonForm(forms.Form):
 #     name = forms.CharField(label="请输入被搜索人的姓名")
 #     SUBJECTID = forms.IntegerField(label="请输入被搜索人的病号")
-# class BedForm(ModelForm):
-#     class Meta:
-#         model = Bed
-#         fields = '__all__'
+
+class PatientBedForm(ModelForm):
+    class Meta:
+        model = PatientBed
+        fields = '__all__'
 
 
 class PatientForm(ModelForm):
@@ -18,7 +19,7 @@ class PatientForm(ModelForm):
 
     class Meta:
         model = Patient
-        fields = ['BEDID', 'SUBJECTID', 'DMGENDER', 'DMAGE', 'DMHEIGHT', 'DMWEIGHT']
+        fields = ['SUBJECTID', 'DMGENDER', 'DMAGE', 'DMHEIGHT', 'DMWEIGHT']
 
 
 class PatientMHForm(ModelForm):
@@ -31,7 +32,7 @@ class PatientMHForm(ModelForm):
                    'MHFAMILY': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
                    'MHSSTATE': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
                    'MHESTATE': forms.TextInput(attrs={'style': 'height:30px; width: 700px'})}
-        fields = ['BEDID', 'SUBJECTID', 'MHPAST', 'MHPERSONAL', 'MHFAMILY', 'MHSSTATE', 'MHESTATE']
+        fields = ['SUBJECTID', 'MHPAST', 'MHPERSONAL', 'MHFAMILY', 'MHSSTATE', 'MHESTATE']
 
 
 class PatientTEForm(ModelForm):
@@ -42,7 +43,7 @@ class PatientTEForm(ModelForm):
         widgets = {'TETEST': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
                    'TERESULT': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
                    'TETORESULT': forms.TextInput(attrs={'style': 'height:30px; width: 700px'})}
-        fields = ['BEDID', 'SUBJECTID', 'TETEST', 'TERESULT', 'TETORESULT']
+        fields = ['SUBJECTID', 'TETEST', 'TERESULT', 'TETORESULT']
 
 
 class PatientLBForm(ModelForm):
@@ -54,7 +55,7 @@ class PatientLBForm(ModelForm):
                    'LBSUCATE': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
                    'LBTEST': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
                    'LBRESULT': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),}
-        fields = ['BEDID', 'SUBJECTID', 'LBCATE', 'LBSUCATE', 'LBTEST', 'LBRESULT']
+        fields = ['SUBJECTID', 'LBCATE', 'LBSUCATE', 'LBTEST', 'LBRESULT']
 
 
 class PatientEXForm(ModelForm):
@@ -63,7 +64,7 @@ class PatientEXForm(ModelForm):
     class Meta:
         model = PatientEX
         widgets = {'EXDOSE': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),}
-        fields = ['BEDID', 'SUBJECTID', 'EXDOSE']
+        fields = ['SUBJECTID', 'EXDOSE']
 
 
 class PatientPRForm(ModelForm):
@@ -71,7 +72,7 @@ class PatientPRForm(ModelForm):
 
     class Meta:
         model = PatientPR
-        fields = ['BEDID', 'SUBJECTID', 'PRFIGE', 'PRCATE']
+        fields = ['SUBJECTID', 'PRFIGE', 'PRCATE']
 
 
 class PatientPEForm(ModelForm):
@@ -80,4 +81,4 @@ class PatientPEForm(ModelForm):
     class Meta:
         model = PatientPE
         widgets = {'PERESULT': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}), }
-        fields = ['BEDID', 'SUBJECTID', 'PETEST', 'PERESULT']
+        fields = ['SUBJECTID', 'PETEST', 'PERESULT']

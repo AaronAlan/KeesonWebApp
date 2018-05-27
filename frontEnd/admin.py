@@ -46,7 +46,7 @@ class PatientPEAdmin(admin.ModelAdmin):
     search_fields = ['BEDID']
 
 
-# admin.site.register(Bed)
+admin.site.register(PatientBed)
 admin.site.register(Patient, PatientAdmin)
 admin.site.register(PatientMH, PatientMHAdmin)
 admin.site.register(PatientTE, PatientTEAdmin)

@@ -8,20 +8,26 @@ from .forms import *
 from .models import *
 import pymysql
 
+
 # Create your views here.
 @login_required
 def homepage(request):
-    curUser = get_object_or_404(User, pk=request.user.id)
-    if curUser.username == "jiaxingyiyuan":
-        # form = BedForm(request.POST)
-        # if request.method == 'POST' and form.is_valid():
-        #     newBed = Bed.objects.create(bed_name=form.cleaned_data['bed_name'])
-        #     newBed.save()
-        # newForm = BedForm()
-        # bedSet = Bed.objects.all()
-        return render(request, 'yiyuan_homepage.html')
-    elif curUser.username == "ronghua":
+    cur_user = get_object_or_404(User, pk=request.user.id)
+    if cur_user.username == "jiaxingyiyuan":
+        form = PatientBedForm(request.POST)
+        bed_exist = False
+        if request.method == 'POST' and form.is_valid():
+            new_bed, created = PatientBed.objects.get_or_create(bed_ID=form.cleaned_data['bed_ID'])
+        new_form = PatientBedForm()
+        bed_set = PatientBed.objects.all().order_by('bed_ID')
+        return render(request, 'yiyuan_homepage.html', {'form': new_form, 'bed_set': bed_set, 'bed_exist': bed_exist})
+    elif cur_user.username == "ronghua":
         return render(request, 'ronghua_homepage.html')
+
+
+@login_required
+def bedadddetails(request, bed_id):
+    return render(request, 'add_bed_details.html', {'bed_id': bed_id})
 
 
 @login_required
@@ -63,12 +69,12 @@ def beddetail(request, device_id):
 
 
 @login_required
-def addpeople(request):
+def addpeople(request, bed_id):
     curUser = get_object_or_404(User, pk=request.user.id)
     if curUser.username == "jiaxingyiyuan":
-        return add_patient(request)
+        return add_patient(request, bed_id)
     elif curUser.username == "ronghua":
-        return add_old_people(request)
+        return add_old_people(request, bed_id)
         pass
 
 
@@ -76,32 +82,42 @@ def add_old_people(request):
     return HttpResponseRedirect(reverse('homepage'))
 
 
-def add_patient(request):
+def add_patient(request, bed_id):
     form = PatientForm(request.POST)
     if request.method == 'POST' and form.is_valid():
-        newPatient = Patient.objects.create(
-            BEDID=form.cleaned_data['BEDID'],
-            SUBJECTID=form.cleaned_data['SUBJECTID'],
-            DMGENDER=form.cleaned_data['DMGENDER'],
-            DMAGE=form.cleaned_data['DMAGE'],
-            DMHEIGHT=form.cleaned_data['DMHEIGHT'],
-            DMWEIGHT=form.cleaned_data['DMWEIGHT'],
-            DMSTDTC=form.cleaned_data['DMSTDTC'],
-            DMENDTC=form.cleaned_data['DMENDTC'],
-        )
-        newPatient.save()
-        return HttpResponseRedirect(reverse('homepage'))
+        cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
+        try:
+            newPatient = Patient.objects.create(
+                BEDID=cur_bed,
+                SUBJECTID=form.cleaned_data['SUBJECTID'],
+                DMGENDER=form.cleaned_data['DMGENDER'],
+                DMAGE=form.cleaned_data['DMAGE'],
+                DMHEIGHT=form.cleaned_data['DMHEIGHT'],
+                DMWEIGHT=form.cleaned_data['DMWEIGHT'],
+                DMSTDTC=form.cleaned_data['DMSTDTC'],
+                DMENDTC=form.cleaned_data['DMENDTC'],
+            )
+            newPatient.save()
+            redirect_url = reverse('bedAddDetails', args=[bed_id, ])
+            return HttpResponseRedirect(redirect_url)
+        except:
+            newForm = PatientForm()
+            return render(request, 'add_new_info.html', {'form': newForm,
+                                                         'bed_id': bed_id,
+                                                         'msg': '病人',
+                                                         'error': '该病人与病床信息已经存在'})
     else:
         newForm = PatientForm()
-        return render(request, 'add_new_info.html', {'form': newForm, 'msg': '病人'})
+        return render(request, 'add_new_info.html', {'form': newForm, 'bed_id': bed_id, 'msg': '病人'})
 
 
 @login_required
-def addmedhistory(request):
+def addmedhistory(request, bed_id):
     form = PatientMHForm(request.POST)
     if request.method == 'POST' and form.is_valid():
+        cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
         newPatientMH = PatientMH.objects.create(
-            BEDID=form.cleaned_data['BEDID'],
+            BEDID=cur_bed,
             SUBJECTID=form.cleaned_data['SUBJECTID'],
             MHDATE=form.cleaned_data['MHDATE'],
             MHPAST=form.cleaned_data['MHPAST'],
@@ -111,18 +127,20 @@ def addmedhistory(request):
             MHESTATE=form.cleaned_data['MHESTATE'],
         )
         newPatientMH.save()
-        return HttpResponseRedirect(reverse('homepage'))
+        redirect_url = reverse('bedAddDetails', args=[bed_id, ])
+        return HttpResponseRedirect(redirect_url)
     else:
         newForm = PatientMHForm()
-        return render(request, 'add_new_info.html', {'form': newForm, 'msg': '病史'})
+        return render(request, 'add_new_info.html', {'form': newForm, 'bed_id': bed_id, 'msg': '病史'})
 
 
 @login_required
-def adddaydiag(request):
+def adddaydiag(request, bed_id):
     form = PatientTEForm(request.POST)
     if request.method == 'POST' and form.is_valid():
+        cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
         newPatientTE = PatientTE.objects.create(
-            BEDID=form.cleaned_data['BEDID'],
+            BEDID=cur_bed,
             SUBJECTID=form.cleaned_data['SUBJECTID'],
             TETEST=form.cleaned_data['TETEST'],
             TERESULT=form.cleaned_data['TERESULT'],
@@ -130,18 +148,20 @@ def adddaydiag(request):
             TETORESULT=form.cleaned_data['TETORESULT'],
         )
         newPatientTE.save()
-        return HttpResponseRedirect(reverse('homepage'))
+        redirect_url = reverse('bedAddDetails', args=[bed_id, ])
+        return HttpResponseRedirect(redirect_url)
     else:
         newForm = PatientTEForm()
-        return render(request, 'add_new_info.html', {'form': newForm, 'msg': '每日问诊'})
+        return render(request, 'add_new_info.html', {'form': newForm, 'bed_id': bed_id, 'msg': '每日问诊'})
 
 
 @login_required
-def addradreport(request):
+def addradreport(request, bed_id):
     form = PatientLBForm(request.POST)
     if request.method == 'POST' and form.is_valid():
+        cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
         newPatientLB = PatientLB.objects.create(
-            BEDID=form.cleaned_data['BEDID'],
+            BEDID=cur_bed,
             SUBJECTID=form.cleaned_data['SUBJECTID'],
             LBDATE=form.cleaned_data['LBDATE'],
             LBCATE=form.cleaned_data['LBCATE'],
@@ -150,60 +170,67 @@ def addradreport(request):
             LBRESULT=form.cleaned_data['LBRESULT'],
         )
         newPatientLB.save()
-        return HttpResponseRedirect(reverse('homepage'))
+        redirect_url = reverse('bedAddDetails', args=[bed_id, ])
+        return HttpResponseRedirect(redirect_url)
     else:
         newForm = PatientLBForm()
-        return render(request, 'add_new_info.html', {'form': newForm, 'msg': '化验放射检验报告'})
+        return render(request, 'add_new_info.html', {'form': newForm, 'bed_id': bed_id, 'msg': '化验放射检验报告'})
 
 
 @login_required
-def adddrughistory(request):
+def adddrughistory(request, bed_id):
     form = PatientEXForm(request.POST)
     if request.method == 'POST' and form.is_valid():
+        cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
         newPatientEX = PatientEX.objects.create(
-            BEDID=form.cleaned_data['BEDID'],
+            BEDID=cur_bed,
             SUBJECTID=form.cleaned_data['SUBJECTID'],
             EXDOSE=form.cleaned_data['EXDOSE'],
             EXDATE=form.cleaned_data['EXDATE'],
         )
         newPatientEX.save()
-        return HttpResponseRedirect(reverse('homepage'))
+        redirect_url = reverse('bedAddDetails', args=[bed_id, ])
+        return HttpResponseRedirect(redirect_url)
     else:
         newForm = PatientEXForm()
-        return render(request, 'add_new_info.html', {'form': newForm, 'msg': '用药记录'})
+        return render(request, 'add_new_info.html', {'form': newForm, 'bed_id': bed_id, 'msg': '用药记录'})
 
 
 @login_required
-def addsurghistory(request):
+def addsurghistory(request, bed_id):
     form = PatientPRForm(request.POST)
     if request.method == 'POST' and form.is_valid():
+        cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
         newPatientPR = PatientPR.objects.create(
-            BEDID=form.cleaned_data['BEDID'],
+            BEDID=cur_bed,
             SUBJECTID=form.cleaned_data['SUBJECTID'],
             PRFIGE=form.cleaned_data['PRFIGE'],
             PRCATE=form.cleaned_data['PRCATE'],
             PRDATE=form.cleaned_data['PRDATE'],
         )
         newPatientPR.save()
-        return HttpResponseRedirect(reverse('homepage'))
+        redirect_url = reverse('bedAddDetails', args=[bed_id, ])
+        return HttpResponseRedirect(redirect_url)
     else:
         newForm = PatientPRForm()
-        return render(request, 'add_new_info.html', {'form': newForm, 'msg': '用药记录'})
+        return render(request, 'add_new_info.html', {'form': newForm, 'bed_id': bed_id, 'msg': '用药记录'})
 
 
 @login_required
-def addbodystatus(request):
+def addbodystatus(request, bed_id):
     form = PatientPEForm(request.POST)
     if request.method == 'POST' and form.is_valid():
+        cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
         newPatientPE = PatientPE.objects.create(
-            BEDID=form.cleaned_data['BEDID'],
+            BEDID=cur_bed,
             SUBJECTID=form.cleaned_data['SUBJECTID'],
             PETEST=form.cleaned_data['PETEST'],
             PERESULT=form.cleaned_data['PERESULT'],
             PEDATE=form.cleaned_data['PEDATE'],
         )
         newPatientPE.save()
-        return HttpResponseRedirect(reverse('homepage'))
+        redirect_url = reverse('bedAddDetails', args=[bed_id, ])
+        return HttpResponseRedirect(redirect_url)
     else:
         newForm = PatientPEForm()
-        return render(request, 'add_new_info.html', {'form': newForm, 'msg': '体格检验'})
+        return render(request, 'add_new_info.html', {'form': newForm, 'bed_id': bed_id, 'msg': '体格检验'})

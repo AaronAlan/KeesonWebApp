@@ -3,6 +3,12 @@
 
 {% block content %}
 	<h1 style="text-align: center">添加新{{ msg }}</h1>
+    {% if error %}
+        <div class="alert alert-danger">
+              <strong>{{ error }}</strong>
+        </div>
+    {% endif %}
+    <h2 style="text-align: center">当前床号:{{ bed_id }}</h2>
     <form action="" method="post">
 	    {% csrf_token %}
 	    <table>
