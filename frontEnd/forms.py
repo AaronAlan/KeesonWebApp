@@ -107,7 +107,7 @@ class NU_RonghuaForm(ModelForm):
 
 
 class BT_RonghuaForm(ModelForm):
-    BEDATE = forms.DateField(label="护理时间", widget=forms.DateInput(attrs={'type': 'date'}))
+    BEDATE = forms.DateField(label="检验时间", widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = BT_Ronghua

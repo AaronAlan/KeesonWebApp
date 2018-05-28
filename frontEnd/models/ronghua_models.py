@@ -70,7 +70,7 @@ class BT_Ronghua(models.Model):
     BTFIGE = models.BooleanField(verbose_name='是否手术')
     BTCATE = models.CharField(max_length=200, verbose_name='检验分类', blank=True, null=True)
     BERESULT = models.CharField(max_length=200, verbose_name='检验结果', blank=True, null=True)
-    BEDATE = models.DateField(verbose_name='护理时间', blank=True, null=True)
+    BEDATE = models.DateField(verbose_name='检验时间', blank=True, null=True)
 
     class Meta:
         verbose_name_plural = '荣华体温表(BT_Ronghua)'
