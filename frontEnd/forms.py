@@ -1,16 +1,11 @@
 from django import forms
 from django.forms import ModelForm
-from .models import *
+from .models.ronghua_models import *
+from .models.yiyuan_models import *
 
 
-# class PersonForm(forms.Form):
-#     name = forms.CharField(label="请输入被搜索人的姓名")
-#     SUBJECTID = forms.IntegerField(label="请输入被搜索人的病号")
-
-class PatientBedForm(ModelForm):
-    class Meta:
-        model = PatientBed
-        fields = '__all__'
+class BedForm(forms.Form):
+    bed_ID = forms.IntegerField(label='床号')
 
 
 class PatientForm(ModelForm):
@@ -82,3 +77,49 @@ class PatientPEForm(ModelForm):
         model = PatientPE
         widgets = {'PERESULT': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}), }
         fields = ['SUBJECTID', 'PETEST', 'PERESULT']
+
+
+class DM_RonghuaForm(ModelForm):
+    DMSTDTC = forms.DateField(label="入院日期", widget=forms.DateInput(attrs={'type': 'date'}))
+    DMENDTC = forms.DateField(label="出院日期", widget=forms.DateInput(attrs={'type': 'date'}))
+
+    class Meta:
+        model = DM_Ronghua
+        widgets = {'DMENTDIAG': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}), }
+        fields = ['SUBJECTID', 'DMGENDER', 'DMAGE', 'DMHEIGHT', 'DMWEIGHT', 'DMENTDIAG']
+
+
+class EX_RonghuaForm(ModelForm):
+    EXDATE = forms.DateField(label="给药日期", widget=forms.DateInput(attrs={'type': 'date'}))
+
+    class Meta:
+        model = EX_Ronghua
+        fields = ['SUBJECTID', 'EXDOSE', 'EXDOSEUNIT', 'EXDOCTYPE']
+
+
+class NU_RonghuaForm(ModelForm):
+    NUDATE = forms.DateField(label="护理时间", widget=forms.DateInput(attrs={'type': 'date'}))
+
+    class Meta:
+        model = NU_Ronghua
+        widgets = {'NURESULT': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}), }
+        fields = ['SUBJECTID', 'NUCATE', 'NURESULT']
+
+
+class BT_RonghuaForm(ModelForm):
+    BEDATE = forms.DateField(label="护理时间", widget=forms.DateInput(attrs={'type': 'date'}))
+
+    class Meta:
+        model = BT_Ronghua
+        widgets = {'BERESULT': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}), }
+        fields = ['SUBJECTID', 'BTFIGE', 'BTCATE', 'BERESULT']
+
+
+class BB_RonghuaForm(ModelForm):
+    BBDATE = forms.DateField(label="检验时间", widget=forms.DateInput(attrs={'type': 'date'}))
+
+    class Meta:
+        model = BB_Ronghua
+        widgets = {'BBRESULT': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}), }
+        fields = ['SUBJECTID', 'BBCATE', 'BBRESULT']
+

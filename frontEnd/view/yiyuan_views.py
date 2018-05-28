@@ -4,8 +4,9 @@ from django.urls import reverse
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import *
-from .models import *
+from django.contrib.auth.models import User
+from frontEnd.forms import *
+from frontEnd.models import *
 import pymysql
 
 
@@ -14,15 +15,20 @@ import pymysql
 def homepage(request):
     cur_user = get_object_or_404(User, pk=request.user.id)
     if cur_user.username == "jiaxingyiyuan":
-        form = PatientBedForm(request.POST)
+        form = BedForm(request.POST)
         bed_exist = False
         if request.method == 'POST' and form.is_valid():
             new_bed, created = PatientBed.objects.get_or_create(bed_ID=form.cleaned_data['bed_ID'])
-        new_form = PatientBedForm()
+        new_form = BedForm()
         bed_set = PatientBed.objects.all().order_by('bed_ID')
         return render(request, 'yiyuan_homepage.html', {'form': new_form, 'bed_set': bed_set, 'bed_exist': bed_exist})
     elif cur_user.username == "ronghua":
-        return render(request, 'ronghua_homepage.html')
+        form = BedForm(request.POST)
+        if request.method == 'POST' and form.is_valid():
+            new_bed, created = RonghuaBed.objects.get_or_create(bed_ID=form.cleaned_data['bed_ID'])
+        new_form = BedForm()
+        bed_set = RonghuaBed.objects.all().order_by('bed_ID')
+        return render(request, 'ronghua_homepage.html', {'form': new_form, 'bed_set': bed_set})
 
 
 @login_required
@@ -70,19 +76,6 @@ def beddetail(request, device_id):
 
 @login_required
 def addpeople(request, bed_id):
-    curUser = get_object_or_404(User, pk=request.user.id)
-    if curUser.username == "jiaxingyiyuan":
-        return add_patient(request, bed_id)
-    elif curUser.username == "ronghua":
-        return add_old_people(request, bed_id)
-        pass
-
-
-def add_old_people(request):
-    return HttpResponseRedirect(reverse('homepage'))
-
-
-def add_patient(request, bed_id):
     form = PatientForm(request.POST)
     if request.method == 'POST' and form.is_valid():
         cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
@@ -108,7 +101,11 @@ def add_patient(request, bed_id):
                                                          'error': '该病人与病床信息已经存在'})
     else:
         newForm = PatientForm()
-        return render(request, 'add_new_info.html', {'form': newForm, 'bed_id': bed_id, 'msg': '病人'})
+        return render(request, 'add_new_info.html', {'form': newForm, 'bed_id': bed_id, 'msg': '病人基本信息'})
+
+
+def add_old_people(request):
+    return HttpResponseRedirect(reverse('homepage'))
 
 
 @login_required

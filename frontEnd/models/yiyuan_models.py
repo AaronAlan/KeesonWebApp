@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -7,7 +6,7 @@ class PatientBed(models.Model):
     bed_ID = models.IntegerField(primary_key=True, verbose_name='床号')
 
     class Meta:
-        verbose_name_plural = '病床'
+        verbose_name_plural = '病床(PatientBed)'
 
     def __str__(self):
         return str(self.pk)+'号床'
@@ -29,7 +28,7 @@ class Patient(models.Model):
     DMENDTC = models.DateField(verbose_name='出院日期', blank=True, null=True)
 
     class Meta:
-        verbose_name_plural = '病人基本信息'
+        verbose_name_plural = '病人基本信息(Patient)'
         unique_together = ['BEDID', 'SUBJECTID']
 
     def __str__(self):
@@ -48,7 +47,7 @@ class PatientMH(models.Model):
     MHESTATE = models.CharField(max_length=200, verbose_name='现病史（出院病症）', blank=True, null=True)
 
     class Meta:
-        verbose_name_plural = '病人病史'
+        verbose_name_plural = '病人病史(PatientMH)'
 
     def __str__(self):
         return str(self.BEDID) + '-' + str(self.SUBJECTID)
@@ -64,7 +63,7 @@ class PatientTE(models.Model):
     TETORESULT = models.CharField(max_length=200, verbose_name='总问诊结果', blank=True, null=True)
 
     class Meta:
-        verbose_name_plural = '病人每日问诊'
+        verbose_name_plural = '病人每日问诊(PatientTE)'
 
     def __str__(self):
         return str(self.BEDID) + '-' + str(self.SUBJECTID)
@@ -81,7 +80,7 @@ class PatientLB(models.Model):
     LBRESULT = models.CharField(max_length=200, verbose_name='检验结果', blank=True, null=True)
 
     class Meta:
-        verbose_name_plural = '病人化验放射检验报告'
+        verbose_name_plural = '病人化验放射检验报告(PatientLB)'
 
     def __str__(self):
         return str(self.BEDID) + '-' + str(self.SUBJECTID)
@@ -95,7 +94,7 @@ class PatientEX(models.Model):
     EXDATE = models.DateField(verbose_name='给药日期', blank=True, null=True)
 
     class Meta:
-        verbose_name_plural = '病人用药记录'
+        verbose_name_plural = '病人用药记录(PatientEX)'
 
     def __str__(self):
         return str(self.BEDID) + '-' + str(self.SUBJECTID)
@@ -110,7 +109,7 @@ class PatientPR(models.Model):
     PRDATE = models.DateField(verbose_name='手术时间', blank=True, null=True)
 
     class Meta:
-        verbose_name_plural = '病人手术状况'
+        verbose_name_plural = '病人手术状况(PatientPR)'
 
     def __str__(self):
         return str(self.BEDID) + '-' + str(self.SUBJECTID)
@@ -125,11 +124,7 @@ class PatientPE(models.Model):
     PEDATE = models.DateField(verbose_name='体格检查日期')
 
     class Meta:
-        verbose_name_plural = '病人体格检验'
+        verbose_name_plural = '病人体格检验(PatientPE)'
 
     def __str__(self):
         return str(self.BEDID) + '-' + str(self.SUBJECTID)
-
-
-
-

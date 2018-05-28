@@ -59,3 +59,44 @@ admin.site.register(PatientEX, PatientEXAdmin)
 admin.site.register(PatientPR, PatientPRAdmin)
 admin.site.register(PatientPE, PatientPEAdmin)
 
+
+class RonghuaBedAdmin(admin.ModelAdmin):
+    search_fields = ['BEDID']
+
+
+class DM_RonghuaAdmin(admin.ModelAdmin):
+    list_display = ['BEDID', 'SUBJECTID', 'DMGENDER', 'DMSTDTC', 'DMENDTC']
+    list_filter = ['BEDID']
+    search_fields = ['BEDID']
+
+
+class EX_RonghuaAdmin(admin.ModelAdmin):
+    list_display = ['BEDID', 'SUBJECTID', 'EXDATE']
+    list_filter = ['BEDID', 'EXDATE']
+    search_fields = ['BEDID']
+
+
+class NU_RonghuaAdmin(admin.ModelAdmin):
+    list_display = ['BEDID', 'SUBJECTID', 'NUCATE', 'NUDATE']
+    list_filter = ['BEDID', 'NUDATE']
+    search_fields = ['BEDID']
+
+
+class BT_RonghuaAdmin(admin.ModelAdmin):
+    list_display = ['BEDID', 'SUBJECTID', 'BTCATE', 'BEDATE']
+    list_filter = ['BEDID', 'BEDATE']
+    search_fields = ['BEDID']
+
+
+class BB_RonghuaAdmin(admin.ModelAdmin):
+    list_display = ['BEDID', 'SUBJECTID', 'BBCATE', 'BBDATE']
+    list_filter = ['BEDID', 'BBDATE']
+    search_fields = ['BEDID']
+
+
+admin.site.register(RonghuaBed, RonghuaBedAdmin)
+admin.site.register(DM_Ronghua, DM_RonghuaAdmin)
+admin.site.register(EX_Ronghua, EX_RonghuaAdmin)
+admin.site.register(NU_Ronghua, NU_RonghuaAdmin)
+admin.site.register(BT_Ronghua, BT_RonghuaAdmin)
+admin.site.register(BB_Ronghua, BB_RonghuaAdmin)
