@@ -4,74 +4,14 @@ from django.urls import reverse
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from frontEnd.forms import *
 from frontEnd.models import *
-import pymysql
-
 
 # Create your views here.
-@login_required
-def homepage(request):
-    cur_user = get_object_or_404(User, pk=request.user.id)
-    if cur_user.username == "jiaxingyiyuan":
-        form = BedForm(request.POST)
-        bed_exist = False
-        if request.method == 'POST' and form.is_valid():
-            new_bed, created = PatientBed.objects.get_or_create(bed_ID=form.cleaned_data['bed_ID'])
-        new_form = BedForm()
-        bed_set = PatientBed.objects.all().order_by('bed_ID')
-        return render(request, 'yiyuan_homepage.html', {'form': new_form, 'bed_set': bed_set, 'bed_exist': bed_exist})
-    elif cur_user.username == "ronghua":
-        form = BedForm(request.POST)
-        if request.method == 'POST' and form.is_valid():
-            new_bed, created = RonghuaBed.objects.get_or_create(bed_ID=form.cleaned_data['bed_ID'])
-        new_form = BedForm()
-        bed_set = RonghuaBed.objects.all().order_by('bed_ID')
-        return render(request, 'ronghua_homepage.html', {'form': new_form, 'bed_set': bed_set})
-
 
 @login_required
 def bedadddetails(request, bed_id):
     return render(request, 'add_bed_details.html', {'bed_id': bed_id})
-
-
-@login_required
-def displaypage(request):
-    try:
-        conn = pymysql.connect("114.55.6.251", "root", "ad016dbbab", "softide_cloud2", charset="utf8")
-        print("Successful connection to db softide_cloud2")
-    except:
-        print("Failed to connect to db softide_cloud2")
-        return HttpResponseRedirect(reverse('homepage'))
-    cur = conn.cursor()
-    bedQuery = "SELECT serial_number, device_id FROM sc_app_beds;"
-    cur.execute(bedQuery)
-    rows = cur.fetchall()
-    # print(type(rows))
-    # print(rows[0])
-    cur.close()
-    conn.close()
-    return render(request, 'bed_page.html', {'bedSet': rows})
-
-
-@login_required
-def beddetail(request, device_id):
-    try:
-        conn = pymysql.connect("114.55.6.251", "root", "ad016dbbab", "softide_cloud2",charset="utf8")
-        print("Successful connection to db softide_cloud2")
-    except:
-        print("Failed to connect to db softide_cloud2")
-        return HttpResponseRedirect(reverse('homepage'))
-    cur = conn.cursor()
-    bed_detail_query = "SELECT id, device_id, date, clear_duration  FROM sc_sleep_quality_day_2018 WHERE device_id = (%s);"
-    cur.execute(bed_detail_query, (device_id,))
-    rows = cur.fetchall()
-    print(rows)
-    cur.close()
-    conn.close()
-    return render(request, 'bed_detail_page.html', {'bedInfo': rows})
-
 
 
 @login_required

@@ -2,10 +2,15 @@ from django.urls import path
 
 from frontEnd.view import yiyuan_views
 from frontEnd.view import ronghua_views
+from frontEnd.view import admin_views
 
 urlpatterns = [
-    path('homepage/', yiyuan_views.homepage, name='homepage'),
-    path('display_page/', yiyuan_views.displaypage, name='displayPage'),
+    path('homepage/', admin_views.homepage, name='homepage'),
+    path('display_page/', admin_views.displaypage, name='displayPage'),
+    path('bed_detail/<str:device_id>/', admin_views.beddetail, name='bedDetail'),
+
+    path('display_test/', admin_views.display_test, name='displayTest'),
+    path('display_daily_info/', admin_views.display_daily_info, name='displayDailyInfo'),
 
     path('bed_add_details/<int:bed_id>/', yiyuan_views.bedadddetails, name='bedAddDetails'),
     path('add_people/<int:bed_id>/', yiyuan_views.addpeople, name='addPerson'),
@@ -15,7 +20,6 @@ urlpatterns = [
     path('add_drug_history/<int:bed_id>/', yiyuan_views.adddrughistory, name='addDrugHistory'),
     path('add_surg_history/<int:bed_id>/', yiyuan_views.addsurghistory, name='addSurgHistory'),
     path('add_body_status/<int:bed_id>/', yiyuan_views.addbodystatus, name='addBodyStatus'),
-    path('bed_detail/<str:device_id>/', yiyuan_views.beddetail, name='bedDetail'),
 
     path('ronghua_bed_add_details/<int:bed_id>/', ronghua_views.bedadddetails, name='bedAddDetailsRonghua'),
     path('ronghua_add_people/<int:bed_id>/', ronghua_views.addpeople, name='addPersonRonghua'),
