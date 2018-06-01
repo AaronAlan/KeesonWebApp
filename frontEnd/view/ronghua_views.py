@@ -87,22 +87,22 @@ def addnurshistory(request, bed_id):
 
 @login_required
 def addtemperature(request, bed_id):
-    form = BT_RonghuaForm(request.POST)
+    form = PE_RonghuaForm(request.POST)
     if request.method == 'POST' and form.is_valid():
         cur_bed = get_object_or_404(RonghuaBed, bed_ID=bed_id)
-        newBT_Ronghua = BT_Ronghua.objects.create(
+        newPE_Ronghua = PE_Ronghua.objects.create(
             BEDID=cur_bed,
             SUBJECTID=form.cleaned_data['SUBJECTID'],
-            BTFIGE=form.cleaned_data['BTFIGE'],
-            BTCATE=form.cleaned_data['BTCATE'],
-            BERESULT=form.cleaned_data['BERESULT'],
-            BEDATE=form.cleaned_data['BEDATE'],
+            PEOPT=form.cleaned_data['PEOPT'],
+            PECATE=form.cleaned_data['PECATE'],
+            PERESULT=form.cleaned_data['PERESULT'],
+            PEDATE=form.cleaned_data['PEDATE'],
         )
-        newBT_Ronghua.save()
+        newPE_Ronghua.save()
         redirect_url = reverse('bedAddDetailsRonghua', args=[bed_id, ])
         return HttpResponseRedirect(redirect_url)
     else:
-        newForm = BT_RonghuaForm()
+        newForm = PE_RonghuaForm()
         return render(request, 'add_new_info.html', {'form': newForm, 'bed_id': bed_id, 'msg': '体温表'})
 
 

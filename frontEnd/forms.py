@@ -106,13 +106,13 @@ class NU_RonghuaForm(ModelForm):
         fields = ['SUBJECTID', 'NUCATE', 'NURESULT']
 
 
-class BT_RonghuaForm(ModelForm):
-    BEDATE = forms.DateField(label="检验时间", widget=forms.DateInput(attrs={'type': 'date'}))
+class PE_RonghuaForm(ModelForm):
+    PEDATE = forms.DateField(label="检验时间", widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
-        model = BT_Ronghua
-        widgets = {'BERESULT': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}), }
-        fields = ['SUBJECTID', 'BTFIGE', 'BTCATE', 'BERESULT']
+        model = PE_Ronghua
+        widgets = {'PERESULT': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}), }
+        fields = ['SUBJECTID', 'PEOPT', 'PECATE', 'PERESULT']
 
 
 class BB_RonghuaForm(ModelForm):

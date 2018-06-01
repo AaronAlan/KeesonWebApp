@@ -6,7 +6,8 @@ class RonghuaBed(models.Model):
     bed_ID = models.IntegerField(primary_key=True, verbose_name='床号')
 
     class Meta:
-        verbose_name_plural = '荣华病床(RonghuaBed)'
+        db_table = "ronghua_bed"
+        verbose_name_plural = '荣华病床(ronghua_bed)'
 
     def __str__(self):
         return str(self.pk)+'号床'
@@ -28,7 +29,8 @@ class DM_Ronghua(models.Model):
     DMENTDIAG = models.CharField(max_length=200, verbose_name='入院诊断', blank=True, null=True)
 
     class Meta:
-        verbose_name_plural = '荣华病人基本信息(DM_Ronghua)'
+        db_table = "ronghua_demographic"
+        verbose_name_plural = '荣华病人基本信息(ronghua_demographic)'
         unique_together = ['BEDID', 'SUBJECTID']
 
     def __str__(self):
@@ -44,7 +46,8 @@ class EX_Ronghua(models.Model):
     EXDATE = models.DateField(verbose_name='给药日期', blank=True, null=True)
 
     class Meta:
-        verbose_name_plural = '荣华用药记录(EX_Ronghua)'
+        db_table = "ronghua_exposure"
+        verbose_name_plural = '荣华用药记录(ronghua_exposure)'
 
     def __str__(self):
         return str(self.BEDID) + '-' + str(self.SUBJECTID)
@@ -58,22 +61,24 @@ class NU_Ronghua(models.Model):
     NUDATE = models.DateField(verbose_name='护理时间', blank=True, null=True)
 
     class Meta:
-        verbose_name_plural = '荣华护理记录(NU_Ronghua)'
+        db_table = "ronghua_nursing"
+        verbose_name_plural = '荣华护理记录(ronghua_nursing)'
 
     def __str__(self):
         return str(self.BEDID) + '-' + str(self.SUBJECTID)
 
 
-class BT_Ronghua(models.Model):
+class PE_Ronghua(models.Model):
     BEDID = models.ForeignKey(RonghuaBed, verbose_name='床号', on_delete=models.CASCADE)
     SUBJECTID = models.IntegerField(verbose_name='病号')
-    BTFIGE = models.BooleanField(verbose_name='是否手术')
-    BTCATE = models.CharField(max_length=200, verbose_name='检验分类', blank=True, null=True)
-    BERESULT = models.CharField(max_length=200, verbose_name='检验结果', blank=True, null=True)
-    BEDATE = models.DateField(verbose_name='检验时间', blank=True, null=True)
+    PEOPT = models.BooleanField(verbose_name='是否手术')
+    PECATE = models.CharField(max_length=200, verbose_name='检验分类', blank=True, null=True)
+    PERESULT = models.CharField(max_length=200, verbose_name='检验结果', blank=True, null=True)
+    PEDATE = models.DateField(verbose_name='检验时间', blank=True, null=True)
 
     class Meta:
-        verbose_name_plural = '荣华体温表(BT_Ronghua)'
+        db_table = "ronghua_physical_examination"
+        verbose_name_plural = '荣华体检表(ronghua_physical_examination)'
 
     def __str__(self):
         return str(self.BEDID) + '-' + str(self.SUBJECTID)
@@ -87,7 +92,8 @@ class BB_Ronghua(models.Model):
     BBDATE = models.DateField(verbose_name='检验时间', blank=True, null=True)
 
     class Meta:
-        verbose_name_plural = '荣华婴儿表(BB_Ronghua)'
+        db_table = "ronghua_baby"
+        verbose_name_plural = '荣华婴儿表(ronghua_baby)'
 
     def __str__(self):
         return str(self.BEDID) + '-' + str(self.SUBJECTID)

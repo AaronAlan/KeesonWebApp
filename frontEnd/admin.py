@@ -82,9 +82,9 @@ class NU_RonghuaAdmin(admin.ModelAdmin):
     search_fields = ['BEDID']
 
 
-class BT_RonghuaAdmin(admin.ModelAdmin):
-    list_display = ['BEDID', 'SUBJECTID', 'BTCATE', 'BEDATE']
-    list_filter = ['BEDID', 'BEDATE']
+class PE_RonghuaAdmin(admin.ModelAdmin):
+    list_display = ['BEDID', 'SUBJECTID', 'PECATE', 'PEDATE']
+    list_filter = ['BEDID', 'PEDATE']
     search_fields = ['BEDID']
 
 
@@ -98,5 +98,5 @@ admin.site.register(RonghuaBed, RonghuaBedAdmin)
 admin.site.register(DM_Ronghua, DM_RonghuaAdmin)
 admin.site.register(EX_Ronghua, EX_RonghuaAdmin)
 admin.site.register(NU_Ronghua, NU_RonghuaAdmin)
-admin.site.register(BT_Ronghua, BT_RonghuaAdmin)
+admin.site.register(PE_Ronghua, PE_RonghuaAdmin)
 admin.site.register(BB_Ronghua, BB_RonghuaAdmin)
