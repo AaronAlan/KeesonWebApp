@@ -13,35 +13,6 @@ def bedadddetails(request, bed_id):
     return render(request, 'ronghua_add_bed_details.html', {'bed_id': bed_id})
 
 
-# @login_required
-# def addpeople(request, bed_id):
-#     form = DM_RonghuaForm(request.POST)
-#     if request.method == 'POST' and form.is_valid():
-#         # cur_bed = get_object_or_404(RonghuaBed, bed_ID=bed_id)
-#         try:
-#             newDM_Ronghua = DM_Ronghua.objects.create(
-#                 bed_number=bed_id,
-#                 subject_id=form.cleaned_data['subject_id'],
-#                 gender=form.cleaned_data['gender'],
-#                 age=form.cleaned_data['age'],
-#                 height=form.cleaned_data['height'],
-#                 weight=form.cleaned_data['weight'],
-#                 in_date=form.cleaned_data['in_date'],
-#                 out_date=form.cleaned_data['out_date'],
-#                 in_diagnose=form.cleaned_data['in_diagnose'],
-#             )
-#             newDM_Ronghua.save()
-#             redirect_url = reverse('bedAddDetailsRonghua', args=[bed_id, ])
-#             return HttpResponseRedirect(redirect_url)
-#         except:
-#             newForm = DM_RonghuaForm()
-#             return render(request, 'add_new_info.html', {'form': newForm,
-#                                                          'bed_id': bed_id,
-#                                                          'msg': '病人',
-#                                                          'error': '该病人与病床信息已经存在'})
-#     else:
-#         newForm = DM_RonghuaForm()
-#         return render(request, 'add_new_info.html', {'form': newForm, 'bed_id': bed_id, 'msg': '荣华养老院病人基本信息'})
 @login_required
 def addpeople(request, bed_id):
     form = DM_RonghuaForm(request.POST)
