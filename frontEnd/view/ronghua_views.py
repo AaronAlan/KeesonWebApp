@@ -26,14 +26,14 @@ def addpeople(request, bed_id):
                                     gender=form.cleaned_data['gender'], age=form.cleaned_data['age'],
                                     height=form.cleaned_data['height'], weight=form.cleaned_data['weight'],
                                     in_date=form.cleaned_data['in_date'], out_date=form.cleaned_data['out_date'],
-                                    in_diagnose=form.changed_data['in_diagnose'])
+                                    in_diagnose=form.cleaned_data['in_diagnose'])
             if latest_patient is not None and latest_patient.out_date is None \
                     and newPatient.subject_id != latest_patient.subject_id:
                 raise Exception
             if DM_Ronghua.objects.filter(bed_number=bed_id, subject_id=newPatient.subject_id).exists():
                 print("exist")
                 original_patient = DM_Ronghua.objects.get(bed_number=bed_id, subject_id=newPatient.subject_id)
-                if original_patient.in_date is not None and original_patient.out_date is not None:
+                if original_patient.out_date is not None:
                     raise Exception
                 original_patient.gender = newPatient.gender
                 original_patient.age = newPatient.age
@@ -45,10 +45,10 @@ def addpeople(request, bed_id):
                 original_patient.save()
             else:
                 newPatient.save()
-            redirect_url = reverse('bedAddDetails', args=[bed_id, ])
+            redirect_url = reverse('bedAddDetailsRonghua', args=[bed_id, ])
             return HttpResponseRedirect(redirect_url)
         except:
-            if latest_patient.out_date is None:
+            if latest_patient is not None and latest_patient.out_date is None:
                 newForm = DM_RonghuaForm(instance=latest_patient)
             else:
                 newForm = DM_RonghuaForm()
@@ -62,7 +62,7 @@ def addpeople(request, bed_id):
             return render(request, 'add_new_info.html', {'form': insuf_form,
                                                          'bed_id': bed_id,
                                                          'msg': '荣华养老院病人基本信息',
-                                                         'error': '请填写该病床最近病人出院时间，方可添加新入院病人;您也可以修改当前病人基本信息'})
+                                                         'error': '请填写该病床最近病人出院时间，方可添加新入院病人; 您也可以修改当前病人基本信息'})
         else:
             newForm = DM_RonghuaForm()
             return render(request, 'add_new_info.html', {'form': newForm, 'bed_id': bed_id, 'msg': '荣华养老院病人基本信息'})

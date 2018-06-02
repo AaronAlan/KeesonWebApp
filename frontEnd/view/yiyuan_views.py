@@ -18,8 +18,11 @@ def bedadddetails(request, bed_id):
 def addpeople(request, bed_id):
     form = PatientForm(request.POST)
     latest_patient = Patient.objects.filter(bed_number=bed_id).last()
+    # 用户提交表单：1，当前未出院病人信息（修改或添加）
+    #             2，前一病人已出院，添加新病人
     if request.method == 'POST' and form.is_valid():
         try:
+            # 入院出院时间必须有效
             if form.cleaned_data['in_date'] is not None and form.cleaned_data['out_date'] is not None \
                     and (form.cleaned_data['in_date'] > form.cleaned_data['out_date']):
                 raise Exception
@@ -28,13 +31,16 @@ def addpeople(request, bed_id):
                                  height=form.cleaned_data['height'], weight=form.cleaned_data['weight'],
                                  in_date=form.cleaned_data['in_date'], out_date=form.cleaned_data['out_date'],
                                  )
+            # 上一病人必须出院才能添加新病人，否则异常报错
             if latest_patient is not None and latest_patient.out_date is None \
                     and newPatient.subject_id != latest_patient.subject_id:
                 raise Exception
+            # 提交病人信息已经存在：1，已经出院，异常报错
+            #                   2，还未出院，修改或添加信息
             if Patient.objects.filter(bed_number=bed_id, subject_id=newPatient.subject_id).exists():
                 print("exist")
                 original_patient = Patient.objects.get(bed_number=bed_id, subject_id=newPatient.subject_id)
-                if original_patient.in_date is not None and original_patient.out_date is not None:
+                if original_patient.out_date is not None:
                     raise Exception
                 original_patient.gender = newPatient.gender
                 original_patient.age = newPatient.age
@@ -43,12 +49,13 @@ def addpeople(request, bed_id):
                 original_patient.in_date = newPatient.in_date
                 original_patient.out_date = newPatient.out_date
                 original_patient.save()
+            # 提交新病人信息并保存
             else:
                 newPatient.save()
             redirect_url = reverse('bedAddDetails', args=[bed_id, ])
             return HttpResponseRedirect(redirect_url)
         except:
-            if latest_patient.out_date is None:
+            if latest_patient is not None and latest_patient.out_date is None:
                 newForm = PatientForm(instance=latest_patient)
             else:
                 newForm = PatientForm()
@@ -56,13 +63,15 @@ def addpeople(request, bed_id):
                                                          'bed_id': bed_id,
                                                          'msg': '病人基本信息',
                                                          'error': '输入信息有误：不能输入重复的病号信息；出院时间不能早于入院时间; 完善当前病人信息才可继续添加病人'})
+    # method = "GET"： 1，当前病人还未出院，渲染旧表单
+    #                  2，当前病人已出院，渲染新表单
     else:
         if latest_patient is not None and latest_patient.out_date is None:
             insuf_form = PatientForm(instance=latest_patient)
             return render(request, 'add_new_info.html', {'form': insuf_form,
                                                          'bed_id': bed_id,
                                                          'msg': '病人基本信息',
-                                                         'error': '请填写该病床最近病人出院时间，方可添加新入院病人;您也可以修改当前病人基本信息'})
+                                                         'error': '请填写该病床最近病人出院时间，方可添加新入院病人; 您也可以修改当前病人基本信息'})
         else:
             newForm = PatientForm()
             return render(request, 'add_new_info.html', {'form': newForm, 'bed_id': bed_id, 'msg': '病人基本信息'})
