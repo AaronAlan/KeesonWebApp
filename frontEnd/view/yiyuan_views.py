@@ -21,14 +21,14 @@ def addpeople(request, bed_id):
         cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
         try:
             newPatient = Patient.objects.create(
-                BEDID=cur_bed,
-                SUBJECTID=form.cleaned_data['SUBJECTID'],
-                DMGENDER=form.cleaned_data['DMGENDER'],
-                DMAGE=form.cleaned_data['DMAGE'],
-                DMHEIGHT=form.cleaned_data['DMHEIGHT'],
-                DMWEIGHT=form.cleaned_data['DMWEIGHT'],
-                DMSTDTC=form.cleaned_data['DMSTDTC'],
-                DMENDTC=form.cleaned_data['DMENDTC'],
+                bed_number=cur_bed,
+                subject_id=form.cleaned_data['subject_id'],
+                gender=form.cleaned_data['gender'],
+                age=form.cleaned_data['age'],
+                height=form.cleaned_data['height'],
+                weight=form.cleaned_data['weight'],
+                in_date=form.cleaned_data['in_date'],
+                out_date=form.cleaned_data['out_date'],
             )
             newPatient.save()
             redirect_url = reverse('bedAddDetails', args=[bed_id, ])
@@ -54,14 +54,14 @@ def addmedhistory(request, bed_id):
     if request.method == 'POST' and form.is_valid():
         cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
         newPatientMH = PatientMH.objects.create(
-            BEDID=cur_bed,
-            SUBJECTID=form.cleaned_data['SUBJECTID'],
-            MHDATE=form.cleaned_data['MHDATE'],
-            MHPAST=form.cleaned_data['MHPAST'],
-            MHPERSONAL=form.cleaned_data['MHPERSONAL'],
-            MHFAMILY=form.cleaned_data['MHFAMILY'],
-            MHSSTATE=form.cleaned_data['MHSSTATE'],
-            MHESTATE=form.cleaned_data['MHESTATE'],
+            bed_number=cur_bed,
+            subject_id=form.cleaned_data['subject_id'],
+            inquiry_date=form.cleaned_data['inquiry_date'],
+            past_history=form.cleaned_data['past_history'],
+            personal_history=form.cleaned_data['personal_history'],
+            family_history=form.cleaned_data['family_history'],
+            in_symptom=form.cleaned_data['in_symptom'],
+            out_symptom=form.cleaned_data['out_symptom'],
         )
         newPatientMH.save()
         redirect_url = reverse('bedAddDetails', args=[bed_id, ])
@@ -77,12 +77,12 @@ def adddaydiag(request, bed_id):
     if request.method == 'POST' and form.is_valid():
         cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
         newPatientTE = PatientTE.objects.create(
-            BEDID=cur_bed,
-            SUBJECTID=form.cleaned_data['SUBJECTID'],
-            TETEST=form.cleaned_data['TETEST'],
-            TERESULT=form.cleaned_data['TERESULT'],
-            TEDATE=form.cleaned_data['TEDATE'],
-            TETORESULT=form.cleaned_data['TETORESULT'],
+            bed_number=cur_bed,
+            subject_id=form.cleaned_data['subject_id'],
+            exam_program=form.cleaned_data['exam_program'],
+            result=form.cleaned_data['result'],
+            date=form.cleaned_data['date'],
+            all_result=form.cleaned_data['all_result'],
         )
         newPatientTE.save()
         redirect_url = reverse('bedAddDetails', args=[bed_id, ])
@@ -98,13 +98,13 @@ def addradreport(request, bed_id):
     if request.method == 'POST' and form.is_valid():
         cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
         newPatientLB = PatientLB.objects.create(
-            BEDID=cur_bed,
-            SUBJECTID=form.cleaned_data['SUBJECTID'],
-            LBDATE=form.cleaned_data['LBDATE'],
-            LBCATE=form.cleaned_data['LBCATE'],
-            LBSUCATE=form.cleaned_data['LBSUCATE'],
-            LBTEST=form.cleaned_data['LBTEST'],
-            LBRESULT=form.cleaned_data['LBRESULT'],
+            bed_number=cur_bed,
+            subject_id=form.cleaned_data['subject_id'],
+            date=form.cleaned_data['date'],
+            category=form.cleaned_data['category'],
+            subcategory=form.cleaned_data['subcategory'],
+            exam_program=form.cleaned_data['exam_program'],
+            result=form.cleaned_data['result'],
         )
         newPatientLB.save()
         redirect_url = reverse('bedAddDetails', args=[bed_id, ])
@@ -120,10 +120,10 @@ def adddrughistory(request, bed_id):
     if request.method == 'POST' and form.is_valid():
         cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
         newPatientEX = PatientEX.objects.create(
-            BEDID=cur_bed,
-            SUBJECTID=form.cleaned_data['SUBJECTID'],
-            EXDOSE=form.cleaned_data['EXDOSE'],
-            EXDATE=form.cleaned_data['EXDATE'],
+            bed_number=cur_bed,
+            subject_id=form.cleaned_data['subject_id'],
+            dose=form.cleaned_data['dose'],
+            date=form.cleaned_data['date'],
         )
         newPatientEX.save()
         redirect_url = reverse('bedAddDetails', args=[bed_id, ])
@@ -139,11 +139,11 @@ def addsurghistory(request, bed_id):
     if request.method == 'POST' and form.is_valid():
         cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
         newPatientPR = PatientPR.objects.create(
-            BEDID=cur_bed,
-            SUBJECTID=form.cleaned_data['SUBJECTID'],
-            PRFIGE=form.cleaned_data['PRFIGE'],
-            PRCATE=form.cleaned_data['PRCATE'],
-            PRDATE=form.cleaned_data['PRDATE'],
+            bed_number=cur_bed,
+            subject_id=form.cleaned_data['subject_id'],
+            is_operated=form.cleaned_data['is_operated'],
+            category=form.cleaned_data['category'],
+            date=form.cleaned_data['date'],
         )
         newPatientPR.save()
         redirect_url = reverse('bedAddDetails', args=[bed_id, ])
@@ -159,11 +159,11 @@ def addbodystatus(request, bed_id):
     if request.method == 'POST' and form.is_valid():
         cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
         newPatientPE = PatientPE.objects.create(
-            BEDID=cur_bed,
-            SUBJECTID=form.cleaned_data['SUBJECTID'],
-            PETEST=form.cleaned_data['PETEST'],
-            PERESULT=form.cleaned_data['PERESULT'],
-            PEDATE=form.cleaned_data['PEDATE'],
+            bed_number=cur_bed,
+            subject_id=form.cleaned_data['subject_id'],
+            category=form.cleaned_data['category'],
+            result=form.cleaned_data['result'],
+            date=form.cleaned_data['date'],
         )
         newPatientPE.save()
         redirect_url = reverse('bedAddDetails', args=[bed_id, ])

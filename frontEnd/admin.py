@@ -5,49 +5,49 @@ from .models import *
 
 
 class PatientBedAdmin(admin.ModelAdmin):
-    search_fields = ['BEDID']
+    search_fields = ['bed_ID']
 
 
 class PatientAdmin(admin.ModelAdmin):
-    list_display = ['BEDID', 'SUBJECTID', 'DMGENDER', 'DMSTDTC', 'DMENDTC']
-    list_filter = ['BEDID']
-    search_fields = ['BEDID']
+    list_display = ['bed_number', 'subject_id', 'gender', 'in_date', 'out_date']
+    list_filter = ['bed_number']
+    search_fields = ['bed_number']
 
 
 class PatientMHAdmin(admin.ModelAdmin):
-    list_display = ['BEDID', 'SUBJECTID', 'MHDATE']
-    list_filter = ['BEDID']
-    search_fields = ['BEDID']
+    list_display = ['bed_number', 'subject_id', 'inquiry_date']
+    list_filter = ['bed_number']
+    search_fields = ['bed_number']
 
 
 class PatientTEAdmin(admin.ModelAdmin):
-    list_display = ['BEDID', 'SUBJECTID', 'TEDATE']
-    list_filter = ['BEDID']
-    search_fields = ['BEDID']
+    list_display = ['bed_number', 'subject_id', 'date']
+    list_filter = ['bed_number']
+    search_fields = ['bed_number']
 
 
 class PatientLBAdmin(admin.ModelAdmin):
-    list_display = ['BEDID', 'SUBJECTID', 'LBDATE']
-    list_filter = ['BEDID']
-    search_fields = ['BEDID']
+    list_display = ['bed_number', 'subject_id', 'date']
+    list_filter = ['bed_number']
+    search_fields = ['bed_number']
 
 
 class PatientEXAdmin(admin.ModelAdmin):
-    list_display = ['BEDID', 'SUBJECTID', 'EXDATE']
-    list_filter = ['BEDID']
-    search_fields = ['BEDID']
+    list_display = ['bed_number', 'subject_id', 'date']
+    list_filter = ['bed_number']
+    search_fields = ['bed_number']
 
 
 class PatientPRAdmin(admin.ModelAdmin):
-    list_display = ['BEDID', 'SUBJECTID', 'PRDATE']
-    list_filter = ['BEDID']
-    search_fields = ['BEDID']
+    list_display = ['bed_number', 'subject_id', 'date']
+    list_filter = ['bed_number']
+    search_fields = ['bed_number']
 
 
 class PatientPEAdmin(admin.ModelAdmin):
-    list_display = ['BEDID', 'SUBJECTID', 'PEDATE']
-    list_filter = ['BEDID']
-    search_fields = ['BEDID']
+    list_display = ['bed_number', 'subject_id', 'date']
+    list_filter = ['bed_number']
+    search_fields = ['bed_number']
 
 
 admin.site.register(PatientBed, PatientBedAdmin)
@@ -61,37 +61,37 @@ admin.site.register(PatientPE, PatientPEAdmin)
 
 
 class RonghuaBedAdmin(admin.ModelAdmin):
-    search_fields = ['BEDID']
+    search_fields = ['bed_ID']
 
 
 class DM_RonghuaAdmin(admin.ModelAdmin):
-    list_display = ['BEDID', 'SUBJECTID', 'DMGENDER', 'DMSTDTC', 'DMENDTC']
-    list_filter = ['BEDID']
-    search_fields = ['BEDID']
+    list_display = ['bed_number', 'subject_id', 'gender', 'in_date', 'out_date']
+    list_filter = ['bed_number']
+    search_fields = ['bed_number']
 
 
 class EX_RonghuaAdmin(admin.ModelAdmin):
-    list_display = ['BEDID', 'SUBJECTID', 'EXDATE']
-    list_filter = ['BEDID', 'EXDATE']
-    search_fields = ['BEDID']
+    list_display = ['bed_number', 'subject_id', 'date']
+    list_filter = ['bed_number', 'date']
+    search_fields = ['bed_number']
 
 
 class NU_RonghuaAdmin(admin.ModelAdmin):
-    list_display = ['BEDID', 'SUBJECTID', 'NUCATE', 'NUDATE']
-    list_filter = ['BEDID', 'NUDATE']
-    search_fields = ['BEDID']
+    list_display = ['bed_number', 'subject_id', 'category', 'date']
+    list_filter = ['bed_number', 'date']
+    search_fields = ['bed_number']
 
 
 class PE_RonghuaAdmin(admin.ModelAdmin):
-    list_display = ['BEDID', 'SUBJECTID', 'PECATE', 'PEDATE']
-    list_filter = ['BEDID', 'PEDATE']
-    search_fields = ['BEDID']
+    list_display = ['bed_number', 'subject_id', 'category', 'date']
+    list_filter = ['bed_number', 'date']
+    search_fields = ['bed_number']
 
 
 class BB_RonghuaAdmin(admin.ModelAdmin):
-    list_display = ['BEDID', 'SUBJECTID', 'BBCATE', 'BBDATE']
-    list_filter = ['BEDID', 'BBDATE']
-    search_fields = ['BEDID']
+    list_display = ['bed_number', 'subject_id', 'category', 'date']
+    list_filter = ['bed_number', 'date']
+    search_fields = ['bed_number']
 
 
 admin.site.register(RonghuaBed, RonghuaBedAdmin)

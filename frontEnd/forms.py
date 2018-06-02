@@ -9,117 +9,117 @@ class BedForm(forms.Form):
 
 
 class PatientForm(ModelForm):
-    DMSTDTC = forms.DateField(label="入院日期", widget=forms.DateInput(attrs={'type': 'date'}))
-    DMENDTC = forms.DateField(label="出院日期", widget=forms.DateInput(attrs={'type': 'date'}))
+    in_date = forms.DateField(label="入院日期", widget=forms.DateInput(attrs={'type': 'date'}))
+    out_date = forms.DateField(label="出院日期", widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = Patient
-        fields = ['SUBJECTID', 'DMGENDER', 'DMAGE', 'DMHEIGHT', 'DMWEIGHT']
+        fields = ['subject_id', 'gender', 'age', 'height', 'weight']
 
 
 class PatientMHForm(ModelForm):
-    MHDATE = forms.DateField(label="问诊时间", widget=forms.DateInput(attrs={'type': 'date'}))
+    inquiry_date = forms.DateField(label="问诊时间", widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = PatientMH
-        widgets = {'MHPAST': forms.TextInput(attrs={'style':'height:30px; width: 700px'}),
-                   'MHPERSONAL': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
-                   'MHFAMILY': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
-                   'MHSSTATE': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
-                   'MHESTATE': forms.TextInput(attrs={'style': 'height:30px; width: 700px'})}
-        fields = ['SUBJECTID', 'MHPAST', 'MHPERSONAL', 'MHFAMILY', 'MHSSTATE', 'MHESTATE']
+        widgets = {'past_history': forms.TextInput(attrs={'style':'height:30px; width: 700px'}),
+                   'personal_history': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
+                   'family_history': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
+                   'in_symptom': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
+                   'out_symptom': forms.TextInput(attrs={'style': 'height:30px; width: 700px'})}
+        fields = ['subject_id', 'past_history', 'personal_history', 'family_history', 'in_symptom', 'out_symptom']
 
 
 class PatientTEForm(ModelForm):
-    TEDATE = forms.DateField(label="问诊时间", widget=forms.DateInput(attrs={'type': 'date'}))
+    date = forms.DateField(label="问诊时间", widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = PatientTE
-        widgets = {'TETEST': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
-                   'TERESULT': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
-                   'TETORESULT': forms.TextInput(attrs={'style': 'height:30px; width: 700px'})}
-        fields = ['SUBJECTID', 'TETEST', 'TERESULT', 'TETORESULT']
+        widgets = {'exam_program': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
+                   'result': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
+                   'all_result': forms.TextInput(attrs={'style': 'height:30px; width: 700px'})}
+        fields = ['subject_id', 'exam_program', 'result', 'all_result']
 
 
 class PatientLBForm(ModelForm):
-    LBDATE = forms.DateField(label="检验时间", widget=forms.DateInput(attrs={'type': 'date'}))
+    date = forms.DateField(label="检验时间", widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = PatientLB
-        widgets = {'LBCATE': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
-                   'LBSUCATE': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
-                   'LBTEST': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
-                   'LBRESULT': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),}
-        fields = ['SUBJECTID', 'LBCATE', 'LBSUCATE', 'LBTEST', 'LBRESULT']
+        widgets = {'category': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
+                   'subcategory': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
+                   'exam_program': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
+                   'result': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),}
+        fields = ['subject_id', 'category', 'subcategory', 'exam_program', 'result']
 
 
 class PatientEXForm(ModelForm):
-    EXDATE = forms.DateField(label="给药日期", widget=forms.DateInput(attrs={'type': 'date'}))
+    date = forms.DateField(label="给药日期", widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = PatientEX
-        widgets = {'EXDOSE': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),}
-        fields = ['SUBJECTID', 'EXDOSE']
+        widgets = {'dose': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),}
+        fields = ['subject_id', 'dose']
 
 
 class PatientPRForm(ModelForm):
-    PRDATE = forms.DateField(label="手术时间", widget=forms.DateInput(attrs={'type': 'date'}))
+    date = forms.DateField(label="手术时间", widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = PatientPR
-        fields = ['SUBJECTID', 'PRFIGE', 'PRCATE']
+        fields = ['subject_id', 'is_operated', 'category']
 
 
 class PatientPEForm(ModelForm):
-    PEDATE = forms.DateField(label="体格检查日期", widget=forms.DateInput(attrs={'type': 'date'}))
+    date = forms.DateField(label="体格检查日期", widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = PatientPE
-        widgets = {'PERESULT': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}), }
-        fields = ['SUBJECTID', 'PETEST', 'PERESULT']
+        widgets = {'result': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}), }
+        fields = ['subject_id', 'category', 'result']
 
 
 class DM_RonghuaForm(ModelForm):
-    DMSTDTC = forms.DateField(label="入院日期", widget=forms.DateInput(attrs={'type': 'date'}))
-    DMENDTC = forms.DateField(label="出院日期", widget=forms.DateInput(attrs={'type': 'date'}))
+    in_date = forms.DateField(label="入院日期", widget=forms.DateInput(attrs={'type': 'date'}))
+    out_date = forms.DateField(label="出院日期", widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = DM_Ronghua
-        widgets = {'DMENTDIAG': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}), }
-        fields = ['SUBJECTID', 'DMGENDER', 'DMAGE', 'DMHEIGHT', 'DMWEIGHT', 'DMENTDIAG']
+        widgets = {'in_diagnose': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}), }
+        fields = ['subject_id', 'gender', 'age', 'height', 'weight', 'in_diagnose']
 
 
 class EX_RonghuaForm(ModelForm):
-    EXDATE = forms.DateField(label="给药日期", widget=forms.DateInput(attrs={'type': 'date'}))
+    date = forms.DateField(label="给药日期", widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = EX_Ronghua
-        fields = ['SUBJECTID', 'EXDOSE', 'EXDOSEUNIT', 'EXDOCTYPE']
+        fields = ['subject_id', 'dose', 'unit', 'doctor_advice']
 
 
 class NU_RonghuaForm(ModelForm):
-    NUDATE = forms.DateField(label="护理时间", widget=forms.DateInput(attrs={'type': 'date'}))
+    date = forms.DateField(label="护理时间", widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = NU_Ronghua
-        widgets = {'NURESULT': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}), }
-        fields = ['SUBJECTID', 'NUCATE', 'NURESULT']
+        widgets = {'result': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}), }
+        fields = ['subject_id', 'category', 'result']
 
 
 class PE_RonghuaForm(ModelForm):
-    PEDATE = forms.DateField(label="检验时间", widget=forms.DateInput(attrs={'type': 'date'}))
+    date = forms.DateField(label="检验时间", widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = PE_Ronghua
-        widgets = {'PERESULT': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}), }
-        fields = ['SUBJECTID', 'PEOPT', 'PECATE', 'PERESULT']
+        widgets = {'result': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}), }
+        fields = ['subject_id', 'is_operated', 'category', 'result']
 
 
 class BB_RonghuaForm(ModelForm):
-    BBDATE = forms.DateField(label="检验时间", widget=forms.DateInput(attrs={'type': 'date'}))
+    date = forms.DateField(label="检验时间", widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = BB_Ronghua
-        widgets = {'BBRESULT': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}), }
-        fields = ['SUBJECTID', 'BBCATE', 'BBRESULT']
+        widgets = {'result': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}), }
+        fields = ['subject_id', 'category', 'result']
 

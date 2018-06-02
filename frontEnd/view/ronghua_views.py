@@ -20,15 +20,15 @@ def addpeople(request, bed_id):
         cur_bed = get_object_or_404(RonghuaBed, bed_ID=bed_id)
         try:
             newDM_Ronghua = DM_Ronghua.objects.create(
-                BEDID=cur_bed,
-                SUBJECTID=form.cleaned_data['SUBJECTID'],
-                DMGENDER=form.cleaned_data['DMGENDER'],
-                DMAGE=form.cleaned_data['DMAGE'],
-                DMHEIGHT=form.cleaned_data['DMHEIGHT'],
-                DMWEIGHT=form.cleaned_data['DMWEIGHT'],
-                DMSTDTC=form.cleaned_data['DMSTDTC'],
-                DMENDTC=form.cleaned_data['DMENDTC'],
-                DMENTDIAG=form.cleaned_data['DMENTDIAG'],
+                bed_number=cur_bed,
+                subject_id=form.cleaned_data['subject_id'],
+                gender=form.cleaned_data['gender'],
+                age=form.cleaned_data['age'],
+                height=form.cleaned_data['height'],
+                weight=form.cleaned_data['weight'],
+                in_date=form.cleaned_data['in_date'],
+                out_date=form.cleaned_data['out_date'],
+                in_diagnose=form.cleaned_data['in_diagnose'],
             )
             newDM_Ronghua.save()
             redirect_url = reverse('bedAddDetailsRonghua', args=[bed_id, ])
@@ -50,12 +50,12 @@ def adddrughistory(request, bed_id):
     if request.method == 'POST' and form.is_valid():
         cur_bed = get_object_or_404(RonghuaBed, bed_ID=bed_id)
         newEX_Ronghua = EX_Ronghua.objects.create(
-            BEDID=cur_bed,
-            SUBJECTID=form.cleaned_data['SUBJECTID'],
-            EXDOSE=form.cleaned_data['EXDOSE'],
-            EXDOSEUNIT=form.cleaned_data['EXDOSEUNIT'],
-            EXDOCTYPE=form.cleaned_data['EXDOCTYPE'],
-            EXDATE=form.cleaned_data['EXDATE'],
+            bed_number=cur_bed,
+            subject_id=form.cleaned_data['subject_id'],
+            dose=form.cleaned_data['dose'],
+            unit=form.cleaned_data['unit'],
+            doctor_advice=form.cleaned_data['doctor_advice'],
+            date=form.cleaned_data['date'],
         )
         newEX_Ronghua.save()
         redirect_url = reverse('bedAddDetailsRonghua', args=[bed_id, ])
@@ -71,11 +71,11 @@ def addnurshistory(request, bed_id):
     if request.method == 'POST' and form.is_valid():
         cur_bed = get_object_or_404(RonghuaBed, bed_ID=bed_id)
         newNU_Ronghua = NU_Ronghua.objects.create(
-            BEDID=cur_bed,
-            SUBJECTID=form.cleaned_data['SUBJECTID'],
-            NUCATE=form.cleaned_data['NUCATE'],
-            NURESULT=form.cleaned_data['NURESULT'],
-            NUDATE=form.cleaned_data['NUDATE'],
+            bed_number=cur_bed,
+            subject_id=form.cleaned_data['subject_id'],
+            category=form.cleaned_data['category'],
+            result=form.cleaned_data['result'],
+            date=form.cleaned_data['date'],
         )
         newNU_Ronghua.save()
         redirect_url = reverse('bedAddDetailsRonghua', args=[bed_id, ])
@@ -91,12 +91,12 @@ def addtemperature(request, bed_id):
     if request.method == 'POST' and form.is_valid():
         cur_bed = get_object_or_404(RonghuaBed, bed_ID=bed_id)
         newPE_Ronghua = PE_Ronghua.objects.create(
-            BEDID=cur_bed,
-            SUBJECTID=form.cleaned_data['SUBJECTID'],
-            PEOPT=form.cleaned_data['PEOPT'],
-            PECATE=form.cleaned_data['PECATE'],
-            PERESULT=form.cleaned_data['PERESULT'],
-            PEDATE=form.cleaned_data['PEDATE'],
+            bed_number=cur_bed,
+            subject_id=form.cleaned_data['subject_id'],
+            is_operated=form.cleaned_data['is_operated'],
+            category=form.cleaned_data['category'],
+            result=form.cleaned_data['result'],
+            date=form.cleaned_data['date'],
         )
         newPE_Ronghua.save()
         redirect_url = reverse('bedAddDetailsRonghua', args=[bed_id, ])
@@ -112,11 +112,11 @@ def adddbaby(request, bed_id):
     if request.method == 'POST' and form.is_valid():
         cur_bed = get_object_or_404(RonghuaBed, bed_ID=bed_id)
         newBB_Ronghua = BB_Ronghua.objects.create(
-            BEDID=cur_bed,
-            SUBJECTID=form.cleaned_data['SUBJECTID'],
-            BBCATE=form.cleaned_data['BBCATE'],
-            BBRESULT=form.cleaned_data['BBRESULT'],
-            BBDATE=form.cleaned_data['BBDATE'],
+            bed_number=cur_bed,
+            subject_id=form.cleaned_data['subject_id'],
+            category=form.cleaned_data['category'],
+            result=form.cleaned_data['result'],
+            date=form.cleaned_data['date'],
         )
         newBB_Ronghua.save()
         redirect_url = reverse('bedAddDetailsRonghua', args=[bed_id, ])
