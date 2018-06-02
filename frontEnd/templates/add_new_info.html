@@ -2,6 +2,13 @@
 {% block title %}添加{{ msg }}{% endblock %}
 
 {% block content %}
+    <script>
+    $(function () {
+        $('.datetime-input').datetimepicker({
+            format:'YYYY-MM-DD HH:mm:ss',
+        });
+    });
+    </script>
 	<h1 style="text-align: center">添加新{{ msg }}</h1>
     {% if error %}
         <div class="alert alert-danger">

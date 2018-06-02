@@ -14,7 +14,8 @@ class RonghuaBed(models.Model):
 
 
 class DM_Ronghua(models.Model):
-    bed_number = models.ForeignKey(RonghuaBed, verbose_name='床号', on_delete=models.CASCADE)
+    # bed_number = models.ForeignKey(RonghuaBed, verbose_name='床号', on_delete=models.CASCADE)
+    bed_number = models.CharField(max_length=64, verbose_name='床号')
     Gender_Choices = {
         ('M', '男性'),
         ('F', '女性'),
@@ -24,8 +25,8 @@ class DM_Ronghua(models.Model):
     age = models.IntegerField(verbose_name='年龄', blank=True, null=True)
     height = models.IntegerField(verbose_name='身高', help_text='(cm)', blank=True, null=True)
     weight = models.FloatField(verbose_name='体重', help_text='(kg)', blank=True, null=True)
-    in_date = models.DateField(verbose_name='入院日期', blank=True, null=True)
-    out_date = models.DateField(verbose_name='出院日期', blank=True, null=True)
+    in_date = models.DateTimeField(verbose_name='入院日期', blank=True, null=True)
+    out_date = models.DateTimeField(verbose_name='出院日期', blank=True, null=True)
     in_diagnose = models.CharField(max_length=255, verbose_name='入院诊断', blank=True, null=True)
 
     class Meta:
@@ -38,7 +39,8 @@ class DM_Ronghua(models.Model):
 
 
 class EX_Ronghua(models.Model):
-    bed_number = models.ForeignKey(RonghuaBed, verbose_name='床号', on_delete=models.CASCADE)
+    # bed_number = models.ForeignKey(RonghuaBed, verbose_name='床号', on_delete=models.CASCADE)
+    bed_number = models.CharField(max_length=64, verbose_name='床号')
     subject_id = models.IntegerField(verbose_name='病号')
     dose = models.CharField(max_length=64, verbose_name='每次用药剂量', blank=True, null=True)
     unit = models.CharField(max_length=64, verbose_name='剂量单位', blank=True, null=True)
@@ -54,7 +56,8 @@ class EX_Ronghua(models.Model):
 
 
 class NU_Ronghua(models.Model):
-    bed_number = models.ForeignKey(RonghuaBed, verbose_name='床号', on_delete=models.CASCADE)
+    # bed_number = models.ForeignKey(RonghuaBed, verbose_name='床号', on_delete=models.CASCADE)
+    bed_number = models.CharField(max_length=64, verbose_name='床号')
     subject_id = models.IntegerField(verbose_name='病号')
     category = models.CharField(max_length=64, verbose_name='护理分类', blank=True, null=True)
     result = models.CharField(max_length=255, verbose_name='护理结果', blank=True, null=True)
@@ -69,7 +72,8 @@ class NU_Ronghua(models.Model):
 
 
 class PE_Ronghua(models.Model):
-    bed_number = models.ForeignKey(RonghuaBed, verbose_name='床号', on_delete=models.CASCADE)
+    # bed_number = models.ForeignKey(RonghuaBed, verbose_name='床号', on_delete=models.CASCADE)
+    bed_number = models.CharField(max_length=64, verbose_name='床号')
     subject_id = models.IntegerField(verbose_name='病号')
     is_operated = models.BooleanField(verbose_name='是否手术')
     category = models.CharField(max_length=64, verbose_name='检验分类', blank=True, null=True)
@@ -85,7 +89,8 @@ class PE_Ronghua(models.Model):
 
 
 class BB_Ronghua(models.Model):
-    bed_number = models.ForeignKey(RonghuaBed, verbose_name='床号', on_delete=models.CASCADE)
+    # bed_number = models.ForeignKey(RonghuaBed, verbose_name='床号', on_delete=models.CASCADE)
+    bed_number = models.CharField(max_length=64, verbose_name='床号')
     subject_id = models.IntegerField(verbose_name='病号')
     category = models.CharField(max_length=64, verbose_name='检验分类', blank=True, null=True)
     result = models.CharField(max_length=255, verbose_name='检验结果', blank=True, null=True)

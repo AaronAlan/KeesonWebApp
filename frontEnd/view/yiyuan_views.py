@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from frontEnd.forms import *
 from frontEnd.models import *
-
+from datetime import datetime
 # Create your views here.
 
 @login_required
@@ -17,31 +17,55 @@ def bedadddetails(request, bed_id):
 @login_required
 def addpeople(request, bed_id):
     form = PatientForm(request.POST)
+    latest_patient = Patient.objects.filter(bed_number=bed_id).last()
     if request.method == 'POST' and form.is_valid():
-        cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
         try:
-            newPatient = Patient.objects.create(
-                bed_number=cur_bed,
-                subject_id=form.cleaned_data['subject_id'],
-                gender=form.cleaned_data['gender'],
-                age=form.cleaned_data['age'],
-                height=form.cleaned_data['height'],
-                weight=form.cleaned_data['weight'],
-                in_date=form.cleaned_data['in_date'],
-                out_date=form.cleaned_data['out_date'],
-            )
-            newPatient.save()
+            if form.cleaned_data['in_date'] is not None and form.cleaned_data['out_date'] is not None \
+                    and (form.cleaned_data['in_date'] > form.cleaned_data['out_date']):
+                raise Exception
+            newPatient = Patient(bed_number=bed_id, subject_id=form.cleaned_data['subject_id'],
+                                 gender=form.cleaned_data['gender'], age=form.cleaned_data['age'],
+                                 height=form.cleaned_data['height'], weight=form.cleaned_data['weight'],
+                                 in_date=form.cleaned_data['in_date'], out_date=form.cleaned_data['out_date'],
+                                 )
+            if latest_patient is not None and latest_patient.out_date is None \
+                    and newPatient.subject_id != latest_patient.subject_id:
+                raise Exception
+            if Patient.objects.filter(bed_number=bed_id, subject_id=newPatient.subject_id).exists():
+                print("exist")
+                original_patient = Patient.objects.get(bed_number=bed_id, subject_id=newPatient.subject_id)
+                if original_patient.in_date is not None and original_patient.out_date is not None:
+                    raise Exception
+                original_patient.gender = newPatient.gender
+                original_patient.age = newPatient.age
+                original_patient.height = newPatient.height
+                original_patient.weight = newPatient.weight
+                original_patient.in_date = newPatient.in_date
+                original_patient.out_date = newPatient.out_date
+                original_patient.save()
+            else:
+                newPatient.save()
             redirect_url = reverse('bedAddDetails', args=[bed_id, ])
             return HttpResponseRedirect(redirect_url)
         except:
-            newForm = PatientForm()
+            if latest_patient.out_date is None:
+                newForm = PatientForm(instance=latest_patient)
+            else:
+                newForm = PatientForm()
             return render(request, 'add_new_info.html', {'form': newForm,
                                                          'bed_id': bed_id,
-                                                         'msg': '病人',
-                                                         'error': '该病人与病床信息已经存在'})
+                                                         'msg': '病人基本信息',
+                                                         'error': '输入信息有误：不能输入重复的病号信息；出院时间不能早于入院时间; 完善当前病人信息才可继续添加病人'})
     else:
-        newForm = PatientForm()
-        return render(request, 'add_new_info.html', {'form': newForm, 'bed_id': bed_id, 'msg': '病人基本信息'})
+        if latest_patient is not None and latest_patient.out_date is None:
+            insuf_form = PatientForm(instance=latest_patient)
+            return render(request, 'add_new_info.html', {'form': insuf_form,
+                                                         'bed_id': bed_id,
+                                                         'msg': '病人基本信息',
+                                                         'error': '请填写该病床最近病人出院时间，方可添加新入院病人;您也可以修改当前病人基本信息'})
+        else:
+            newForm = PatientForm()
+            return render(request, 'add_new_info.html', {'form': newForm, 'bed_id': bed_id, 'msg': '病人基本信息'})
 
 
 def add_old_people(request):
@@ -52,9 +76,9 @@ def add_old_people(request):
 def addmedhistory(request, bed_id):
     form = PatientMHForm(request.POST)
     if request.method == 'POST' and form.is_valid():
-        cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
+        # cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
         newPatientMH = PatientMH.objects.create(
-            bed_number=cur_bed,
+            bed_number=bed_id,
             subject_id=form.cleaned_data['subject_id'],
             inquiry_date=form.cleaned_data['inquiry_date'],
             past_history=form.cleaned_data['past_history'],
@@ -75,9 +99,9 @@ def addmedhistory(request, bed_id):
 def adddaydiag(request, bed_id):
     form = PatientTEForm(request.POST)
     if request.method == 'POST' and form.is_valid():
-        cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
+        # cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
         newPatientTE = PatientTE.objects.create(
-            bed_number=cur_bed,
+            bed_number=bed_id,
             subject_id=form.cleaned_data['subject_id'],
             exam_program=form.cleaned_data['exam_program'],
             result=form.cleaned_data['result'],
@@ -96,9 +120,9 @@ def adddaydiag(request, bed_id):
 def addradreport(request, bed_id):
     form = PatientLBForm(request.POST)
     if request.method == 'POST' and form.is_valid():
-        cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
+        # cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
         newPatientLB = PatientLB.objects.create(
-            bed_number=cur_bed,
+            bed_number=bed_id,
             subject_id=form.cleaned_data['subject_id'],
             date=form.cleaned_data['date'],
             category=form.cleaned_data['category'],
@@ -118,9 +142,9 @@ def addradreport(request, bed_id):
 def adddrughistory(request, bed_id):
     form = PatientEXForm(request.POST)
     if request.method == 'POST' and form.is_valid():
-        cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
+        # cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
         newPatientEX = PatientEX.objects.create(
-            bed_number=cur_bed,
+            bed_number=bed_id,
             subject_id=form.cleaned_data['subject_id'],
             dose=form.cleaned_data['dose'],
             date=form.cleaned_data['date'],
@@ -137,9 +161,9 @@ def adddrughistory(request, bed_id):
 def addsurghistory(request, bed_id):
     form = PatientPRForm(request.POST)
     if request.method == 'POST' and form.is_valid():
-        cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
+        # cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
         newPatientPR = PatientPR.objects.create(
-            bed_number=cur_bed,
+            bed_number=bed_id,
             subject_id=form.cleaned_data['subject_id'],
             is_operated=form.cleaned_data['is_operated'],
             category=form.cleaned_data['category'],
@@ -157,9 +181,9 @@ def addsurghistory(request, bed_id):
 def addbodystatus(request, bed_id):
     form = PatientPEForm(request.POST)
     if request.method == 'POST' and form.is_valid():
-        cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
+        # cur_bed = get_object_or_404(PatientBed, bed_ID=bed_id)
         newPatientPE = PatientPE.objects.create(
-            bed_number=cur_bed,
+            bed_number=bed_id,
             subject_id=form.cleaned_data['subject_id'],
             category=form.cleaned_data['category'],
             result=form.cleaned_data['result'],

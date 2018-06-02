@@ -12,25 +12,54 @@ import re
 from pyecharts import Bar, Line
 
 
+# @login_required
+# def homepage(request):
+#     cur_user = get_object_or_404(User, pk=request.user.id)
+#     if cur_user.username == "jiaxingyiyuan":
+#         form = BedForm(request.POST)
+#         bed_exist = False
+#         if request.method == 'POST' and form.is_valid():
+#             new_bed, created = PatientBed.objects.get_or_create(bed_ID=form.cleaned_data['bed_ID'])
+#         new_form = BedForm()
+#         bed_set = PatientBed.objects.all().order_by('bed_ID')
+#         return render(request, 'yiyuan_homepage.html', {'form': new_form, 'bed_set': bed_set, 'bed_exist': bed_exist})
+#     elif cur_user.username == "ronghua":
+#         form = BedForm(request.POST)
+#         if request.method == 'POST' and form.is_valid():
+#             new_bed, created = RonghuaBed.objects.get_or_create(bed_ID=form.cleaned_data['bed_ID'])
+#         new_form = BedForm()
+#         bed_set = RonghuaBed.objects.all().order_by('bed_ID')
+#         return render(request, 'ronghua_homepage.html', {'form': new_form, 'bed_set': bed_set})
 @login_required
 def homepage(request):
     cur_user = get_object_or_404(User, pk=request.user.id)
     if cur_user.username == "jiaxingyiyuan":
-        form = BedForm(request.POST)
-        bed_exist = False
-        if request.method == 'POST' and form.is_valid():
-            new_bed, created = PatientBed.objects.get_or_create(bed_ID=form.cleaned_data['bed_ID'])
-        new_form = BedForm()
-        bed_set = PatientBed.objects.all().order_by('bed_ID')
-        return render(request, 'yiyuan_homepage.html', {'form': new_form, 'bed_set': bed_set, 'bed_exist': bed_exist})
+        try:
+            conn = pymysql.connect("114.55.6.251", "root", "ad016dbbab", "test", charset="utf8")
+        except:
+            print("Failed to connect to db test")
+            return HttpResponseRedirect(reverse('home'))
+        cur = conn.cursor()
+        bed_query = "SELECT serial_number FROM sc_app_beds;"
+        cur.execute(bed_query)
+        rows = cur.fetchall()
+        cur.close()
+        conn.close()
+        return render(request, 'yiyuan_homepage.html', {'bed_set': rows})
     elif cur_user.username == "ronghua":
-        form = BedForm(request.POST)
-        if request.method == 'POST' and form.is_valid():
-            new_bed, created = RonghuaBed.objects.get_or_create(bed_ID=form.cleaned_data['bed_ID'])
-        new_form = BedForm()
-        bed_set = RonghuaBed.objects.all().order_by('bed_ID')
-        return render(request, 'ronghua_homepage.html', {'form': new_form, 'bed_set': bed_set})
-
+        try:
+            conn = pymysql.connect("114.55.6.251", "root", "ad016dbbab", "test", charset="utf8")
+            print("conn succeeds")
+        except:
+            print("Failed to connect to db test")
+            return HttpResponseRedirect(reverse('home'))
+        cur = conn.cursor()
+        bed_query = "SELECT serial_number FROM sc_app_beds;"
+        cur.execute(bed_query)
+        rows = cur.fetchall()
+        cur.close()
+        conn.close()
+        return render(request, 'ronghua_homepage.html', {'bed_set': rows})
 
 @login_required
 def displaypage(request):
