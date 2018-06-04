@@ -2,15 +2,15 @@ from django.db import models
 # Create your models here.
 
 
-class RonghuaBed(models.Model):
-    bed_ID = models.IntegerField(primary_key=True, verbose_name='床号')
-
-    class Meta:
-        db_table = "ronghua_bed"
-        verbose_name_plural = '荣华病床(ronghua_bed)'
-
-    def __str__(self):
-        return str(self.pk)+'号床'
+# class RonghuaBed(models.Model):
+#     bed_ID = models.IntegerField(primary_key=True, verbose_name='床号')
+#
+#     class Meta:
+#         db_table = "ronghua_bed"
+#         verbose_name_plural = '荣华病床(ronghua_bed)'
+#
+#     def __str__(self):
+#         return str(self.pk)+'号床'
 
 
 class DM_Ronghua(models.Model):
@@ -31,7 +31,7 @@ class DM_Ronghua(models.Model):
 
     class Meta:
         db_table = "ronghua_demographic"
-        verbose_name_plural = '荣华病人基本信息(ronghua_demographic)'
+        verbose_name_plural = '荣华客户基本信息(ronghua_demographic)'
         unique_together = ['bed_number', 'subject_id']
 
     def __str__(self):

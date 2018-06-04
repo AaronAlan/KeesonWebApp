@@ -4,8 +4,8 @@ from django.contrib import admin
 from .models import *
 
 
-class PatientBedAdmin(admin.ModelAdmin):
-    search_fields = ['bed_ID']
+# class PatientBedAdmin(admin.ModelAdmin):
+#     search_fields = ['bed_ID']
 
 
 class PatientAdmin(admin.ModelAdmin):
@@ -50,7 +50,7 @@ class PatientPEAdmin(admin.ModelAdmin):
     search_fields = ['bed_number']
 
 
-admin.site.register(PatientBed, PatientBedAdmin)
+# admin.site.register(PatientBed, PatientBedAdmin)
 admin.site.register(Patient, PatientAdmin)
 admin.site.register(PatientMH, PatientMHAdmin)
 admin.site.register(PatientTE, PatientTEAdmin)
@@ -94,7 +94,7 @@ class BB_RonghuaAdmin(admin.ModelAdmin):
     search_fields = ['bed_number']
 
 
-admin.site.register(RonghuaBed, RonghuaBedAdmin)
+# admin.site.register(RonghuaBed, RonghuaBedAdmin)
 admin.site.register(DM_Ronghua, DM_RonghuaAdmin)
 admin.site.register(EX_Ronghua, EX_RonghuaAdmin)
 admin.site.register(NU_Ronghua, NU_RonghuaAdmin)

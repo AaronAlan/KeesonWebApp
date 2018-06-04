@@ -4,8 +4,8 @@ from .models.ronghua_models import *
 from .models.yiyuan_models import *
 
 
-class BedForm(forms.Form):
-    bed_ID = forms.IntegerField(label='床号')
+# class BedForm(forms.Form):
+#     bed_ID = forms.IntegerField(label='床号')
 
 
 class PatientForm(ModelForm):

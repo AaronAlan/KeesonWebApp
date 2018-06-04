@@ -2,15 +2,15 @@ from django.db import models
 # Create your models here.
 
 
-class PatientBed(models.Model):
-    bed_ID = models.IntegerField(primary_key=True, verbose_name='床号')
-
-    class Meta:
-        db_table = "yiyuan_bed"
-        verbose_name_plural = '病床(yiyuan_bed)'
-
-    def __str__(self):
-        return str(self.pk)+'号床'
+# class PatientBed(models.Model):
+#     bed_ID = models.IntegerField(primary_key=True, verbose_name='床号')
+#
+#     class Meta:
+#         db_table = "yiyuan_bed"
+#         verbose_name_plural = '病床(yiyuan_bed)'
+#
+#     def __str__(self):
+#         return str(self.pk)+'号床'
 
 
 class Patient(models.Model):
