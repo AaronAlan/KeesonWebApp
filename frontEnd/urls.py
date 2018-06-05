@@ -20,6 +20,7 @@ urlpatterns = [
     path('add_drug_history/<int:bed_id>/', yiyuan_views.adddrughistory, name='addDrugHistory'),
     path('add_surg_history/<int:bed_id>/', yiyuan_views.addsurghistory, name='addSurgHistory'),
     path('add_body_status/<int:bed_id>/', yiyuan_views.addbodystatus, name='addBodyStatus'),
+    path('yiyuan_bed_detail/<int:bed_id>/', yiyuan_views.beddetail, name='yiyuanBedDetail'),
 
     path('ronghua_bed_add_details/<str:bed_id>/', ronghua_views.bedadddetails, name='bedAddDetailsRonghua'),
     path('ronghua_add_people/<str:bed_id>/', ronghua_views.addpeople, name='addPersonRonghua'),

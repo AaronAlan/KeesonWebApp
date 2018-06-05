@@ -3,14 +3,16 @@ from django.db import models
 
 
 class PatientBed(models.Model):
-    bed_ID = models.IntegerField(primary_key=True, verbose_name='床编号')
+    bed_ID = models.IntegerField(verbose_name='床编号')
+    device_id = models.CharField(max_length=64, verbose_name='设备号', blank=True, null=True)
+    date = models.DateTimeField(verbose_name='时间', blank=True, null=True)
 
     class Meta:
-        db_table = "yiyuan_bed"
-        verbose_name_plural = '病床(yiyuan_bed)'
+        db_table = "yiyuan_beds"
+        verbose_name_plural = '病床(yiyuan_beds)'
 
     def __str__(self):
-        return str(self.pk)+'床'
+        return str(self.bed_ID)+'床'
 
 
 class Patient(models.Model):

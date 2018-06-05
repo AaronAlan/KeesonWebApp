@@ -39,13 +39,13 @@ def homepage(request):
         # return render(request, 'yiyuan_homepage.html', {'bed_set': rows})
     elif cur_user.username == "ronghua":
         try:
-            conn = pymysql.connect("114.55.6.251", "root", "ad016dbbab", "test", charset="utf8")
+            conn = pymysql.connect("114.55.6.251", "root", "ad016dbbab", "institution_data", charset="utf8")
             print("conn succeeds")
         except:
             print("Failed to connect to db test")
             return HttpResponseRedirect(reverse('home'))
         cur = conn.cursor()
-        bed_query = "SELECT serial_number FROM sc_app_beds;"
+        bed_query = "SELECT serial_number FROM ronghua_beds;"
         cur.execute(bed_query)
         rows = cur.fetchall()
         cur.close()
@@ -54,27 +54,29 @@ def homepage(request):
 
 @login_required
 def displaypage(request):
-    try:
-        conn = pymysql.connect("114.55.6.251", "root", "ad016dbbab", "test", charset="utf8")
-        # print("Successful connection to db softide_cloud2")
-    except:
-        print("Failed to connect to db softide_cloud2")
-        return HttpResponseRedirect(reverse('homepage'))
-    cur = conn.cursor()
-    bedQuery = "SELECT id, device_id FROM sleep_info;"
-    cur.execute(bedQuery)
-    rows = cur.fetchall()
-    cur.close()
-    conn.close()
-    return render(request, 'bed_page.html', {'bedSet': rows})
+    cur_user = get_object_or_404(User, pk=request.user.id)
+    if cur_user.username == "jiaxingyiyuan":
+        bed_set = PatientBed.objects.all()
+        return render(request, 'yiyuan_bed_set_display.html', {'bedSet': bed_set})
+    elif cur_user.username == "ronghua":
+        try:
+            conn = pymysql.connect("114.55.6.251", "root", "ad016dbbab", "test", charset="utf8")
+        except:
+            print("Failed to connect to db softide_cloud2")
+            return HttpResponseRedirect(reverse('homepage'))
+        cur = conn.cursor()
+        bedQuery = "SELECT id, device_id FROM sleep_info;"
+        cur.execute(bedQuery)
+        rows = cur.fetchall()
+        cur.close()
+        conn.close()
+        return render(request, 'bed_page.html', {'bedSet': rows})
 
 
 @login_required
 def beddetail(request, device_id):
     try:
-        # conn = pymysql.connect("114.55.6.251", "root", "ad016dbbab", "softide_cloud2", charset="utf8")
         conn = pymysql.connect("114.55.6.251", "root", "ad016dbbab", "test", charset="utf8")
-        # print("Successful connection to db softide_cloud2")
     except:
         print("Failed to connect to db test")
         return HttpResponseRedirect(reverse('homepage'))
@@ -109,7 +111,6 @@ def beddetail(request, device_id):
 def display_test(request):
     try:
         conn = pymysql.connect("114.55.6.251", "root", "ad016dbbab", "test", charset="utf8")
-        # print("Successful connection to db test")
     except:
         print("Failed to connect to db test")
         return HttpResponseRedirect(reverse('homepage'))

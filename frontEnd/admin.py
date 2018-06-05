@@ -5,6 +5,7 @@ from .models import *
 
 
 class PatientBedAdmin(admin.ModelAdmin):
+    list_display = ['bed_ID', 'device_id', 'date']
     search_fields = ['bed_ID']
 
 

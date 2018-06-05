@@ -14,7 +14,6 @@ from django.db import models
 
 
 class DM_Ronghua(models.Model):
-    # bed_number = models.ForeignKey(RonghuaBed, verbose_name='床号', on_delete=models.CASCADE)
     bed_number = models.CharField(max_length=64, verbose_name='床号')
     Gender_Choices = {
         ('M', '男性'),
@@ -39,7 +38,6 @@ class DM_Ronghua(models.Model):
 
 
 class EX_Ronghua(models.Model):
-    # bed_number = models.ForeignKey(RonghuaBed, verbose_name='床号', on_delete=models.CASCADE)
     bed_number = models.CharField(max_length=64, verbose_name='床号')
     subject_id = models.IntegerField(verbose_name='病号')
     dose = models.CharField(max_length=64, verbose_name='每次用药剂量', blank=True, null=True)
@@ -56,7 +54,6 @@ class EX_Ronghua(models.Model):
 
 
 class NU_Ronghua(models.Model):
-    # bed_number = models.ForeignKey(RonghuaBed, verbose_name='床号', on_delete=models.CASCADE)
     bed_number = models.CharField(max_length=64, verbose_name='床号')
     subject_id = models.IntegerField(verbose_name='病号')
     category = models.CharField(max_length=64, verbose_name='护理分类', blank=True, null=True)
@@ -72,7 +69,6 @@ class NU_Ronghua(models.Model):
 
 
 class PE_Ronghua(models.Model):
-    # bed_number = models.ForeignKey(RonghuaBed, verbose_name='床号', on_delete=models.CASCADE)
     bed_number = models.CharField(max_length=64, verbose_name='床号')
     subject_id = models.IntegerField(verbose_name='病号')
     is_operated = models.BooleanField(verbose_name='是否手术')
@@ -89,7 +85,6 @@ class PE_Ronghua(models.Model):
 
 
 class BB_Ronghua(models.Model):
-    # bed_number = models.ForeignKey(RonghuaBed, verbose_name='床号', on_delete=models.CASCADE)
     bed_number = models.CharField(max_length=64, verbose_name='床号')
     subject_id = models.IntegerField(verbose_name='病号')
     category = models.CharField(max_length=64, verbose_name='检验分类', blank=True, null=True)

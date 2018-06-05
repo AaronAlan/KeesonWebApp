@@ -212,3 +212,9 @@ def addbodystatus(request, bed_id):
     else:
         newForm = PatientPEForm()
         return render(request, 'add_new_info.html', {'form': newForm, 'bed_id': bed_id, 'msg': '体格检验'})
+
+
+@login_required
+def beddetail(request, bed_id):
+    history_patients = Patient.objects.filter(bed_number=bed_id)
+    return render(request, 'yiyuan_patient_display.html', {'patients': history_patients, 'bed_id': bed_id})
