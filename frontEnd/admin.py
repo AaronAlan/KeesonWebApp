@@ -4,8 +4,8 @@ from django.contrib import admin
 from .models import *
 
 
-# class PatientBedAdmin(admin.ModelAdmin):
-#     search_fields = ['bed_ID']
+class PatientBedAdmin(admin.ModelAdmin):
+    search_fields = ['bed_ID']
 
 
 class PatientAdmin(admin.ModelAdmin):
@@ -22,35 +22,35 @@ class PatientMHAdmin(admin.ModelAdmin):
 
 class PatientTEAdmin(admin.ModelAdmin):
     list_display = ['bed_number', 'subject_id', 'date']
-    list_filter = ['bed_number']
+    list_filter = ['bed_number', 'date']
     search_fields = ['bed_number']
 
 
 class PatientLBAdmin(admin.ModelAdmin):
     list_display = ['bed_number', 'subject_id', 'date']
-    list_filter = ['bed_number']
+    list_filter = ['bed_number', 'date']
     search_fields = ['bed_number']
 
 
 class PatientEXAdmin(admin.ModelAdmin):
     list_display = ['bed_number', 'subject_id', 'date']
-    list_filter = ['bed_number']
+    list_filter = ['bed_number', 'date']
     search_fields = ['bed_number']
 
 
 class PatientPRAdmin(admin.ModelAdmin):
     list_display = ['bed_number', 'subject_id', 'date']
-    list_filter = ['bed_number']
+    list_filter = ['bed_number', 'date']
     search_fields = ['bed_number']
 
 
 class PatientPEAdmin(admin.ModelAdmin):
     list_display = ['bed_number', 'subject_id', 'date']
-    list_filter = ['bed_number']
+    list_filter = ['bed_number', 'date']
     search_fields = ['bed_number']
 
 
-# admin.site.register(PatientBed, PatientBedAdmin)
+admin.site.register(PatientBed, PatientBedAdmin)
 admin.site.register(Patient, PatientAdmin)
 admin.site.register(PatientMH, PatientMHAdmin)
 admin.site.register(PatientTE, PatientTEAdmin)

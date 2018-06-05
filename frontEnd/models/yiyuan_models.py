@@ -2,20 +2,19 @@ from django.db import models
 # Create your models here.
 
 
-# class PatientBed(models.Model):
-#     bed_ID = models.IntegerField(primary_key=True, verbose_name='床号')
-#
-#     class Meta:
-#         db_table = "yiyuan_bed"
-#         verbose_name_plural = '病床(yiyuan_bed)'
-#
-#     def __str__(self):
-#         return str(self.pk)+'号床'
+class PatientBed(models.Model):
+    bed_ID = models.IntegerField(primary_key=True, verbose_name='床编号')
+
+    class Meta:
+        db_table = "yiyuan_bed"
+        verbose_name_plural = '病床(yiyuan_bed)'
+
+    def __str__(self):
+        return str(self.pk)+'床'
 
 
 class Patient(models.Model):
-    # bed_number = models.ForeignKey(PatientBed, verbose_name='床号', on_delete=models.CASCADE)
-    bed_number = models.CharField(max_length=64, verbose_name='床号')
+    bed_number = models.IntegerField(verbose_name='床号')
     Gender_Choices = {
         ('M', '男性'),
         ('F', '女性'),
@@ -38,8 +37,7 @@ class Patient(models.Model):
 
 
 class PatientMH(models.Model):
-    # bed_number = models.ForeignKey(PatientBed, verbose_name='床号', on_delete=models.CASCADE)
-    bed_number = models.CharField(max_length=64, verbose_name='床号')
+    bed_number = models.IntegerField(verbose_name='床号')
     subject_id = models.IntegerField(verbose_name='病号')
     inquiry_date = models.DateField(verbose_name='问诊时间', blank=True, null=True)
     past_history = models.CharField(max_length=255, verbose_name='既往史', blank=True, null=True)
@@ -57,8 +55,7 @@ class PatientMH(models.Model):
 
 
 class PatientTE(models.Model):
-    # bed_number = models.ForeignKey(PatientBed, verbose_name='床号', on_delete=models.CASCADE)
-    bed_number = models.CharField(max_length=64, verbose_name='床号')
+    bed_number = models.IntegerField(verbose_name='床号')
     subject_id = models.IntegerField(verbose_name='病号')
     exam_program = models.CharField(max_length=64, verbose_name='每日检查项目', blank=True, null=True)
     result = models.CharField(max_length=255, verbose_name='检查结果', blank=True, null=True)
@@ -74,8 +71,7 @@ class PatientTE(models.Model):
 
 
 class PatientLB(models.Model):
-    # bed_number = models.ForeignKey(PatientBed, verbose_name='床号', on_delete=models.CASCADE)
-    bed_number = models.CharField(max_length=64, verbose_name='床号')
+    bed_number = models.IntegerField(verbose_name='床号')
     subject_id = models.IntegerField(verbose_name='病号')
     date = models.DateField(verbose_name='检验时间', blank=True, null=True)
     category = models.CharField(max_length=64, verbose_name='检验分类', blank=True, null=True)
@@ -92,8 +88,7 @@ class PatientLB(models.Model):
 
 
 class PatientEX(models.Model):
-    # bed_number = models.ForeignKey(PatientBed, verbose_name='床号', on_delete=models.CASCADE)
-    bed_number = models.CharField(max_length=64, verbose_name='床号')
+    bed_number = models.IntegerField(verbose_name='床号')
     subject_id = models.IntegerField(verbose_name='病号')
     dose = models.CharField(max_length=64, verbose_name='每次用药剂量')
     date = models.DateField(verbose_name='给药日期', blank=True, null=True)
@@ -107,8 +102,7 @@ class PatientEX(models.Model):
 
 
 class PatientPR(models.Model):
-    # bed_number = models.ForeignKey(PatientBed, verbose_name='床号', on_delete=models.CASCADE)
-    bed_number = models.CharField(max_length=64, verbose_name='床号')
+    bed_number = models.IntegerField(verbose_name='床号')
     subject_id = models.IntegerField(verbose_name='病号')
     is_operated = models.BooleanField(verbose_name='是否手术')
     category = models.CharField(max_length=64, verbose_name='手术类别', blank=True, null=True)
@@ -123,8 +117,7 @@ class PatientPR(models.Model):
 
 
 class PatientPE(models.Model):
-    # bed_number = models.ForeignKey(PatientBed, verbose_name='床号', on_delete=models.CASCADE)
-    bed_number = models.CharField(max_length=64, verbose_name='床号')
+    bed_number = models.IntegerField(verbose_name='床号')
     subject_id = models.IntegerField(verbose_name='病号')
     category = models.CharField(max_length=64, verbose_name='体格检查名称')
     result = models.CharField(max_length=255, verbose_name='体格检查结果')
