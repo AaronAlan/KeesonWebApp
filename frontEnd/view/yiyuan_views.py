@@ -48,7 +48,7 @@ def addpeople(request, bed_id):
                 print("exist")
                 original_patient = Patient.objects.get(bed_number=bed_id, subject_id=newPatient.subject_id)
                 if original_patient.out_date is not None:
-                    error_msg = '该病号对应病人已经录入数据库库，不能输入重复的病号信息。若修改，请登录管理员页面操作。'
+                    error_msg = '该病号对应病人已经录入数据库，不能输入重复的病号信息。若修改，请登录管理员页面操作。'
                     raise Exception
                 original_patient.gender = newPatient.gender
                 original_patient.age = newPatient.age

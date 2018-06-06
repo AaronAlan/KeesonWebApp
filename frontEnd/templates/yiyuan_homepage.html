@@ -19,7 +19,7 @@
     <h3 style="text-align: center">已有病床</h3>
     {% for bed in bed_set %}
         <div class="post-single col-md-1">
-            <a href="{% url 'bedAddDetails' bed.pk %}"><img class="img-responsive" src="/static/keeson/img/bedicon.jpg"/><p class="text-center">{{ bed.pk }}床</p></a>
+            <a href="{% url 'bedAddDetails' bed.bed_ID %}"><img class="img-responsive" src="/static/keeson/img/bedicon.jpg"/><p class="text-center">{{ bed.bed_ID }}床</p></a>
         </div>
     {% endfor %}
 
