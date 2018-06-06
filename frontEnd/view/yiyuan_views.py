@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from frontEnd.forms import *
 from frontEnd.models import *
-from datetime import datetime
+import datetime, pymysql, re
 # Create your views here.
 
 @login_required
@@ -216,5 +216,77 @@ def addbodystatus(request, bed_id):
 
 @login_required
 def beddetail(request, bed_id):
-    history_patients = Patient.objects.filter(bed_number=bed_id)
+    history_patients = Patient.objects.filter(bed_number=bed_id).order_by('-subject_id')
     return render(request, 'yiyuan_patient_display.html', {'patients': history_patients, 'bed_id': bed_id})
+
+
+@login_required
+def patientdetail(request, subject_id):
+    cur_patient = Patient.objects.get(subject_id=subject_id)
+    history_patients = Patient.objects.filter(bed_number=cur_patient.bed_number).order_by('-subject_id')
+    # 得到最近一天日期和最多7天前
+    recent_day = None
+    start_day = cur_patient.in_date
+    if cur_patient.out_date is None:
+        recent_day = datetime.date.today() - datetime.timedelta(days=1)
+    else:
+        recent_day = cur_patient.out_date - datetime.timedelta(days=1)
+
+    if recent_day - cur_patient.in_date > datetime.timedelta(days=7):
+        start_day = recent_day - datetime.timedelta(days=7)
+    start_day = start_day.strftime("%Y-%m-%d")
+    recent_day = recent_day.strftime("%Y-%m-%d")
+    try:
+        conn = pymysql.connect("114.55.6.251", "root", "ad016dbbab", "test_LanDe", charset="utf8")
+    except:
+        print("Failed to connect to db test")
+        return HttpResponseRedirect(reverse('homepage'))
+    cur = conn.cursor()
+    # 获取当天quality_duration 分割拼接时间以及对应睡眠质量值
+    one_day_query = 'SELECT quality_duration FROM sleep_info as SI, yiyuan_beds as YB WHERE SI.device_id = YB.device_id AND YB.bed_ID = (%s) AND SI.date = (%s)'
+    cur.execute(one_day_query, (cur_patient.bed_number, str(recent_day)+' 00:00:00'))
+    recent_qd = cur.fetchone()
+    recent_qd_str = str(recent_qd[0])
+    # print(recent_qd_str)
+    row_time = []
+    row_value = []
+    data_snapshots = re.split(r'[,]', recent_qd_str)
+    for row in data_snapshots:
+        snapshot = re.split(r'[|]', row)
+        if len(snapshot) is 2:
+            row_time.append(snapshot[0])
+            row_value.append(snapshot[1])
+    # 获得最多7天其他健康数据
+    seven_day_query = 'SELECT SI.date, deep_sleep, sleep_grade, major_heart_rate FROM sleep_info as SI, yiyuan_beds as YB ' \
+                      'WHERE SI.device_id = YB.device_id AND YB.bed_ID = (%s) AND SI.date BETWEEN (%s) AND (%s)'
+    cur.execute(seven_day_query, (cur_patient.bed_number, str(start_day)+' 00:00:00', str(recent_day)+' 00:00:00'))
+    data_seven_days = cur.fetchall()
+    # print(data_seven_days)
+    dates = []
+    deepSleeps = []
+    sleepGrades = []
+    majorHR = []
+    for data_day in data_seven_days:
+        dates.append(str(data_day[0].strftime("%Y-%m-%d")))
+        deepSleeps.append(data_day[1])
+        sleepGrades.append(data_day[2])
+        majorHR.append(data_day[3])
+    # print(dates)
+    # print(deepSleeps)
+    # print(sleepGrades)
+    # print(majorHR)
+    cur.close()
+    conn.close()
+    return render(request, 'yiyuan_patient_display.html', {'patients': history_patients, 'bed_id': cur_patient.bed_number,
+                                                           'oneday_time': row_time, 'oneday_value': row_value, 'cur_patient': cur_patient,
+                                                           'dates': dates, 'deepSleeps': deepSleeps, 'sleepGrades': sleepGrades, 'majorHR': majorHR})
+
+
+
+
+
+
+
+
+
+
