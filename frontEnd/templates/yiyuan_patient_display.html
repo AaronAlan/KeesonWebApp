@@ -13,6 +13,12 @@
         </table>
     {% endif %}
 
+    {% if err %}
+        <script>
+            alert('暂没有当前病人最近一日睡眠质量分析数据');
+        </script>
+    {% endif %}
+
 
     <div id="main" style="width: 600px;height:400px;"></div>
 
@@ -59,22 +65,22 @@
                 yAxis: {},
                 series: [
                     {
-                    name: '深睡眠',
-                    type: 'bar',
-                    barCategoryGap:0,
-                    data: {{deepSleeps|safe}}
+                        name: '深睡眠',
+                        type: 'line',
+                        smooth: true,
+                        data: {{deepSleeps|safe}}
                     },
                     {
-                    name: '睡眠分数',
-                    type: 'bar',
-                    barCategoryGap:0,
-                    data: {{sleepGrades|safe}}
+                        name: '睡眠分数',
+                        type: 'line',
+                        smooth: true,
+                        data: {{sleepGrades|safe}}
                     },
                     {
-                    name: '主心率',
-                    type: 'bar',
-                    barCategoryGap:0,
-                    data: {{majorHR|safe}}
+                        name: '主心率',
+                        type: 'line',
+                        smooth: true,
+                        data: {{majorHR|safe}}
                     },
                 ]
      }

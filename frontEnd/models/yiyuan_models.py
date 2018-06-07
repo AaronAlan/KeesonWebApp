@@ -32,7 +32,7 @@ class Patient(models.Model):
     class Meta:
         db_table = "yiyuan_demographic"
         verbose_name_plural = '病人基本信息(yiyuan_demographic)'
-        unique_together = ['bed_number', 'subject_id']
+        # unique_together = ['bed_number', 'subject_id']
 
     def __str__(self):
         return str(self.bed_number) + '-' + str(self.subject_id)
