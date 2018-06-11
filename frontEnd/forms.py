@@ -66,7 +66,7 @@ class PatientEXForm(ModelForm):
     class Meta:
         model = PatientEX
         widgets = {
-            'med_name': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
+            'med_name': forms.TextInput(attrs={'style': 'height:30px; width: 300px'}),
             'dose': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
             'date': forms.DateInput(attrs={'type': 'date'})}
         exclude = ['bed_number']
@@ -108,7 +108,10 @@ class EX_RonghuaForm(ModelForm):
 
     class Meta:
         model = EX_Ronghua
-        widgets = {'date': forms.DateInput(attrs={'type': 'date'})}
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+            'med_name': forms.TextInput(attrs={'style': 'height:30px; width: 300px'}),
+        }
         exclude = ['bed_number']
 
 
