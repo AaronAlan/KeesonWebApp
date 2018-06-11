@@ -92,7 +92,8 @@ class PatientLB(models.Model):
 class PatientEX(models.Model):
     bed_number = models.IntegerField(verbose_name='床号')
     subject_id = models.IntegerField(verbose_name='病号')
-    dose = models.CharField(max_length=64, verbose_name='每次用药剂量')
+    med_name = models.CharField(max_length=64, verbose_name='用药名称', blank=True, null=True)
+    dose = models.CharField(max_length=64, verbose_name='每次用药剂量', blank=True, null=True)
     date = models.DateField(verbose_name='给药日期', blank=True, null=True)
 
     class Meta:
@@ -121,9 +122,9 @@ class PatientPR(models.Model):
 class PatientPE(models.Model):
     bed_number = models.IntegerField(verbose_name='床号')
     subject_id = models.IntegerField(verbose_name='病号')
-    category = models.CharField(max_length=64, verbose_name='体格检查名称')
-    result = models.CharField(max_length=255, verbose_name='体格检查结果')
-    date = models.DateField(verbose_name='体格检查日期')
+    category = models.CharField(max_length=64, verbose_name='体格检查名称', blank=True, null=True)
+    result = models.CharField(max_length=255, verbose_name='体格检查结果', blank=True, null=True)
+    date = models.DateField(verbose_name='体格检查日期', blank=True, null=True)
 
     class Meta:
         db_table = "yiyuan_physical_examination"
