@@ -41,7 +41,7 @@ class Patient(models.Model):
 class PatientMH(models.Model):
     bed_number = models.IntegerField(verbose_name='床号')
     subject_id = models.IntegerField(verbose_name='病号')
-    inquiry_date = models.DateField(verbose_name='问诊时间', blank=True, null=True)
+    inquiry_date = models.DateField(verbose_name='问诊时间(月/日/年)', default='00/00/0000', blank=True, null=True)
     past_history = models.CharField(max_length=255, verbose_name='既往史', blank=True, null=True)
     personal_history = models.CharField(max_length=255, verbose_name='个人史', blank=True, null=True)
     family_history = models.CharField(max_length=255, verbose_name='家族史', blank=True, null=True)
@@ -61,7 +61,7 @@ class PatientTE(models.Model):
     subject_id = models.IntegerField(verbose_name='病号')
     exam_program = models.CharField(max_length=64, verbose_name='每日检查项目', blank=True, null=True)
     result = models.CharField(max_length=255, verbose_name='检查结果', blank=True, null=True)
-    date = models.DateField(verbose_name='问诊时间', blank=True, null=True)
+    date = models.DateField(verbose_name='问诊时间(月/日/年)', default='00/00/0000', blank=True, null=True)
     all_result = models.CharField(max_length=255, verbose_name='总问诊结果', blank=True, null=True)
 
     class Meta:
@@ -75,7 +75,7 @@ class PatientTE(models.Model):
 class PatientLB(models.Model):
     bed_number = models.IntegerField(verbose_name='床号')
     subject_id = models.IntegerField(verbose_name='病号')
-    date = models.DateField(verbose_name='检验时间', blank=True, null=True)
+    date = models.DateField(verbose_name='检验时间(月/日/年)', default='00/00/0000', blank=True, null=True)
     category = models.CharField(max_length=64, verbose_name='检验分类', blank=True, null=True)
     subcategory = models.CharField(max_length=64, verbose_name='检验子分类', blank=True, null=True)
     exam_program = models.CharField(max_length=64, verbose_name='检验项目', blank=True, null=True)
@@ -94,7 +94,7 @@ class PatientEX(models.Model):
     subject_id = models.IntegerField(verbose_name='病号')
     med_name = models.CharField(max_length=64, verbose_name='用药名称', blank=True, null=True)
     dose = models.CharField(max_length=64, verbose_name='每次用药剂量', blank=True, null=True)
-    date = models.DateField(verbose_name='给药日期', blank=True, null=True)
+    date = models.DateField(verbose_name='给药日期(月/日/年)', default='00/00/0000', blank=True, null=True)
 
     class Meta:
         db_table = "yiyuan_exposure"
@@ -109,7 +109,7 @@ class PatientPR(models.Model):
     subject_id = models.IntegerField(verbose_name='病号')
     is_operated = models.BooleanField(verbose_name='是否手术')
     category = models.CharField(max_length=64, verbose_name='手术类别', blank=True, null=True)
-    date = models.DateField(verbose_name='手术时间', blank=True, null=True)
+    date = models.DateField(verbose_name='手术时间(月/日/年)', default='00/00/0000', blank=True, null=True)
 
     class Meta:
         db_table = "yiyuan_operation"
@@ -124,7 +124,7 @@ class PatientPE(models.Model):
     subject_id = models.IntegerField(verbose_name='病号')
     category = models.CharField(max_length=64, verbose_name='体格检查名称', blank=True, null=True)
     result = models.CharField(max_length=255, verbose_name='体格检查结果', blank=True, null=True)
-    date = models.DateField(verbose_name='体格检查日期', blank=True, null=True)
+    date = models.DateField(verbose_name='体格检查日期(月/日/年)', default='00/00/0000', blank=True, null=True)
 
     class Meta:
         db_table = "yiyuan_physical_examination"
