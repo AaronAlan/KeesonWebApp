@@ -65,8 +65,10 @@ class PatientEXForm(ModelForm):
 
     class Meta:
         model = PatientEX
-        widgets = {'dose': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
-                   'date': forms.DateInput(attrs={'type': 'date'})}
+        widgets = {
+            'med_name': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
+            'dose': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
+            'date': forms.DateInput(attrs={'type': 'date'})}
         exclude = ['bed_number']
 
 
