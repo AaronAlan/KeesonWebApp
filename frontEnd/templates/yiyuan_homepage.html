@@ -8,6 +8,17 @@
               <strong>您所添加病床号已经经存在，请检查后再添加</strong>
         </div>
     {% endif %}
+    <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="查找">
+          <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                  <i class="fa fa-search"></i>
+                </button>
+              </span>
+        </div>
+    </form>
+
     <form action="" method="post">
 	    {% csrf_token %}
 	    <table>

@@ -285,7 +285,7 @@ def patientdetail(request, subject_id):
     # print(majorHR)
     cur.close()
     conn.close()
-    return render(request, 'yiyuan_patient_display.html', {'patients': history_patients, 'bed_id': cur_patient.bed_number,
+    return render(request, 'yiyuan_patient_single_display.html', {'patients': history_patients, 'bed_id': cur_patient.bed_number,
                                                            'oneday_time': row_time, 'oneday_value': row_value, 'cur_patient': cur_patient,
                                                            'dates': dates, 'deepSleeps': deepSleeps, 'sleepGrades': sleepGrades, 'majorHR': majorHR})
 
