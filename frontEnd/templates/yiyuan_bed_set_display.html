@@ -6,9 +6,8 @@
     {% if bedSet %}
         <table>
         {% for bed in bedSet %}
-            <div class="post-single col-md-2">
-                <a href="{% url 'yiyuanBedDetail' bed.bed_ID %}"><img class="img-responsive" src="/static/keeson/img/bedicon.jpg"/><p class="text-center">{{ bed.bed_ID }}床</p></a>
-            </div>
+            <div class="box col-md-1"> <img src="/static/keeson/img/bedicon.jpg"><a href="{% url 'yiyuanBedDetail' bed.bed_ID %}">{{ bed.bed_ID }}床</a></div>
+            <style>.box{width:150px;text-align:center;font-szie:18px;}.box img{width:100%;}</style>
         {% endfor %}
         </table>
     {% endif %}

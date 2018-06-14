@@ -19,9 +19,10 @@
         </script>
     {% endif %}
 
-
-    <div id="main" style="width: 600px;height:400px;"></div>
-
+    <div class="col-md-6" id="main" style="width: 600px;height:400px;"></div>
+    <div class="col-md-6" id="deepsleep" style="width: 600px;height:400px;"></div>
+    <div class="col-md-6" id="sleepgrade" style="width: 600px;height:400px;"></div>
+    <div class="col-md-6" id="majorheart" style="width: 600px;height:400px;"></div>
     <script>
      var myChart = echarts.init(document.getElementById('main'));
      var option ={
@@ -47,12 +48,94 @@
      myChart.setOption(option);
     </script>
 
-    <div id="sub" style="width: 600px;height:400px;"></div>
+
+    <script>
+     var myChart = echarts.init(document.getElementById('deepsleep'));
+     var option ={
+    title: {
+                    text: {{ cur_patient.subject_id }}+'号病人近七天深睡眠'
+                },
+                tooltip: {},
+                legend: {
+                    data:['深睡眠', ]
+                },
+
+                xAxis: {
+                    data: {{dates|safe}}
+                },
+                yAxis: {},
+                series: [
+                    {
+                    name: '深睡眠',
+                    type: 'line',
+                    barCategoryGap:0,
+                    data: {{deepSleeps|safe}}
+                    },
+
+                ]
+     }
+     myChart.setOption(option);
+    </script>
+
+    <script>
+     var myChart = echarts.init(document.getElementById('sleepgrade'));
+     var option ={
+    title: {
+                    text: {{ cur_patient.subject_id }}+'号病人近七天睡眠评分'
+                },
+                tooltip: {},
+                legend: {
+                    data:[ '睡眠分数']
+                },
+
+                xAxis: {
+                    data: {{dates|safe}}
+                },
+                yAxis: {},
+                series: [
+                    {
+                    name: '睡眠分数',
+                    type: 'line',
+                    barCategoryGap:0,
+                    data: {{sleepGrades|safe}}
+                    },
+                ]
+     }
+     myChart.setOption(option);
+    </script>
+
+    <script>
+     var myChart = echarts.init(document.getElementById('majorheart'));
+     var option ={
+    title: {
+                    text: {{ cur_patient.subject_id }}+'号病人近七天每日主心率'
+                },
+                tooltip: {},
+                legend: {
+                    data:['主心率']
+                },
+
+                xAxis: {
+                    data: {{dates|safe}}
+                },
+                yAxis: {},
+                series: [
+                    {
+                    name: '主心率',
+                    type: 'line',
+                    barCategoryGap:0,
+                    data: {{majorHR|safe}}
+                    },
+                ]
+     }
+     myChart.setOption(option);
+    </script>
+
     <script>
      var myChart = echarts.init(document.getElementById('sub'));
      var option ={
     title: {
-                    text: {{ cur_patient.subject_id }}+'病人近七天睡眠质量'
+                    text: {{ cur_patient.subject_id }}+'号病人近七天睡眠质量'
                 },
                 tooltip: {},
                 legend: {
@@ -65,22 +148,22 @@
                 yAxis: {},
                 series: [
                     {
-                        name: '深睡眠',
-                        type: 'line',
-                        smooth: true,
-                        data: {{deepSleeps|safe}}
+                    name: '深睡眠',
+                    type: 'line',
+                    barCategoryGap:0,
+                    data: {{deepSleeps|safe}}
                     },
                     {
-                        name: '睡眠分数',
-                        type: 'line',
-                        smooth: true,
-                        data: {{sleepGrades|safe}}
+                    name: '睡眠分数',
+                    type: 'line',
+                    barCategoryGap:0,
+                    data: {{sleepGrades|safe}}
                     },
                     {
-                        name: '主心率',
-                        type: 'line',
-                        smooth: true,
-                        data: {{majorHR|safe}}
+                    name: '主心率',
+                    type: 'line',
+                    barCategoryGap:0,
+                    data: {{majorHR|safe}}
                     },
                 ]
      }
