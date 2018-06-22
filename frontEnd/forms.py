@@ -31,7 +31,8 @@ class PatientMHForm(ModelForm):
                    'family_history': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
                    'in_symptom': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
                    'out_symptom': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
-                   'inquiry_date': forms.DateInput(attrs={'type': 'date'})}
+                   'inquiry_date': forms.DateInput(attrs={'class': 'date-input'})}
+                   # 'inquiry_date': forms.DateInput(attrs={'type': 'date'})}
         exclude = ['bed_number']
 
 
@@ -43,7 +44,7 @@ class PatientTEForm(ModelForm):
         widgets = {'exam_program': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
                    'result': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
                    'all_result': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
-                   'date': forms.DateInput(attrs={'type': 'date'})}
+                   'date': forms.DateInput(attrs={'class': 'date-input'})}
         exclude = ['bed_number']
 
 
@@ -56,7 +57,7 @@ class PatientLBForm(ModelForm):
                    'subcategory': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
                    'exam_program': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
                    'result': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
-                   'date': forms.DateInput(attrs={'type': 'date'})}
+                   'date': forms.DateInput(attrs={'class': 'date-input'})}
         exclude = ['bed_number']
 
 
@@ -68,7 +69,7 @@ class PatientEXForm(ModelForm):
         widgets = {
             'med_name': forms.TextInput(attrs={'style': 'height:30px; width: 300px'}),
             'dose': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
-            'date': forms.DateInput(attrs={'type': 'date'})}
+            'date': forms.DateInput(attrs={'class': 'date-input'})}
         exclude = ['bed_number']
 
 
@@ -77,7 +78,7 @@ class PatientPRForm(ModelForm):
 
     class Meta:
         model = PatientPR
-        widgets = {'date': forms.DateInput(attrs={'type': 'date'})}
+        widgets = {'date': forms.DateInput(attrs={'class': 'date-input'})}
         exclude = ['bed_number']
 
 
@@ -87,7 +88,7 @@ class PatientPEForm(ModelForm):
     class Meta:
         model = PatientPE
         widgets = {'result': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
-                   'date': forms.DateInput(attrs={'type': 'date'})}
+                   'date': forms.DateInput(attrs={'class': 'date-input'})}
         exclude = ['bed_number']
 
 
@@ -109,7 +110,7 @@ class EX_RonghuaForm(ModelForm):
     class Meta:
         model = EX_Ronghua
         widgets = {
-            'date': forms.DateInput(attrs={'type': 'date'}),
+            'date': forms.DateInput(attrs={'class': 'date-input'}),
             'med_name': forms.TextInput(attrs={'style': 'height:30px; width: 300px'}),
         }
         exclude = ['bed_number']
@@ -121,7 +122,7 @@ class NU_RonghuaForm(ModelForm):
     class Meta:
         model = NU_Ronghua
         widgets = {'result': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
-                   'date': forms.DateInput(attrs={'type': 'date'})}
+                   'date': forms.DateInput(attrs={'class': 'date-input'})}
         exclude = ['bed_number']
 
 
@@ -131,7 +132,7 @@ class PE_RonghuaForm(ModelForm):
     class Meta:
         model = PE_Ronghua
         widgets = {'result': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
-                   'date': forms.DateInput(attrs={'type': 'date'})}
+                   'date': forms.DateInput(attrs={'class': 'date-input'})}
         exclude = ['bed_number']
 
 
@@ -141,6 +142,6 @@ class BB_RonghuaForm(ModelForm):
     class Meta:
         model = BB_Ronghua
         widgets = {'result': forms.TextInput(attrs={'style': 'height:30px; width: 700px'}),
-                   'date': forms.DateInput(attrs={'type': 'date'})}
+                   'date': forms.DateInput(attrs={'class': 'date-input'})}
         exclude = ['bed_number']
 

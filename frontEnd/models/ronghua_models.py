@@ -44,7 +44,7 @@ class EX_Ronghua(models.Model):
     dose = models.CharField(max_length=64, verbose_name='每次用药剂量', blank=True, null=True)
     unit = models.CharField(max_length=64, verbose_name='剂量单位', blank=True, null=True)
     doctor_advice = models.CharField(max_length=255, verbose_name='医嘱类型', blank=True, null=True)
-    date = models.DateField(verbose_name='给药日期(月/日/年)', blank=True, null=True)
+    date = models.DateField(verbose_name='给药日期', blank=True, null=True)
 
     class Meta:
         db_table = "ronghua_exposure"
@@ -59,7 +59,7 @@ class NU_Ronghua(models.Model):
     subject_id = models.IntegerField(verbose_name='病号')
     category = models.CharField(max_length=64, verbose_name='护理分类', blank=True, null=True)
     result = models.CharField(max_length=255, verbose_name='护理结果', blank=True, null=True)
-    date = models.DateField(verbose_name='护理时间(月/日/年)', blank=True, null=True)
+    date = models.DateField(verbose_name='护理时间', blank=True, null=True)
 
     class Meta:
         db_table = "ronghua_nursing"
@@ -75,7 +75,7 @@ class PE_Ronghua(models.Model):
     is_operated = models.BooleanField(verbose_name='是否手术')
     category = models.CharField(max_length=64, verbose_name='检验分类', blank=True, null=True)
     result = models.CharField(max_length=255, verbose_name='检验结果', blank=True, null=True)
-    date = models.DateField(verbose_name='检验时间(月/日/年)', blank=True, null=True)
+    date = models.DateField(verbose_name='检验时间', blank=True, null=True)
 
     class Meta:
         db_table = "ronghua_physical_examination"
@@ -90,7 +90,7 @@ class BB_Ronghua(models.Model):
     subject_id = models.IntegerField(verbose_name='病号')
     category = models.CharField(max_length=64, verbose_name='检验分类', blank=True, null=True)
     result = models.CharField(max_length=255, verbose_name='检验结果', blank=True, null=True)
-    date = models.DateField(verbose_name='检验时间(月/日/年)', blank=True, null=True)
+    date = models.DateField(verbose_name='检验时间', blank=True, null=True)
 
     class Meta:
         db_table = "ronghua_baby"

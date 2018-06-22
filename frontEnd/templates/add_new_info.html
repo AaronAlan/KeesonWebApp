@@ -8,6 +8,13 @@
             format:'YYYY-MM-DD HH:mm:ss',
         });
     });
+
+    $(function () {
+        $('.date-input').datetimepicker({
+            format:'YYYY-MM-DD',
+        });
+    });
+
     </script>
 	<h1 style="text-align: center">添加新{{ msg }}</h1>
     {% if error %}
